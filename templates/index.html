@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieGeek</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to MovieGeek</h1>
+    </header>
+    <div>
+        <form method="post" action = "/">
+            <input type="text" name="moviename" placeholder="Search Movie">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    {% if not data["Error"] %}
+    <div>
+        <h2>Movie Name : {{ data["Title"] }}</h2>
+    </div>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
