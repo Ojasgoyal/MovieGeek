@@ -20,6 +20,22 @@
     <div>
         <h2>Movie Name : {{ data["Title"] }}</h2>
     </div>
+    <div style="display: flex; gap: 20px;">
+        <div>
+            <img src="{{data["Poster"]}}" alt="" width="300px" height = "430px">
+        </div>
+        <div>
+            <ul>
+                <li>Released : {{data["Released"]}}</li>
+                <li>Genre : {{data["Genre"]}}</li>
+                <li>Rated : {{data["Rated"]}}</li>
+                <li>Director : {{data["Director"]}}</li>
+                <li>Writer : {{data["Writer"]}}</li>
+                <li>Actors : {{data["Actors"]}}</li>
+                <li>Plot : {{data["Plot"]}}</li>
+            </ul>
+        </div>
+    </div>
     {% endif %}
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
