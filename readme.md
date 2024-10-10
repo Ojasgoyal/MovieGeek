@@ -4,7 +4,7 @@
 
 **MovieGeek** is a Python-based command-line application designed to provide users with detailed information about movies. By leveraging the OMDB (Open Movie Database) API, the application fetches and displays critical details such as the movie's release date, cast (including director, writer, and actors), and ratings from multiple sources, including IMDb. The project aims to offer a simple, user-friendly interface that allows users to retrieve movie information quickly and efficiently.
 
-The project was developed as a part of my final project for CS50P, where the primary objective was to apply the core Python concepts and at least 2-3 built-in libraries taught in the course. This application not only demonstrates an understanding of Python but also showcases skills in handling APIs, managing environment variables, and implementing error handling for network requests.
+The project was developed as a part of my final project for CS50P, where the primary objective was to apply the core Python concepts and at least 2-3 libraries taught in the course. This application not only demonstrates an understanding of Python but also showcases skills in handling APIs, managing environment variables, and implementing error handling for network requests.
 
 ## Technologies Used
 
