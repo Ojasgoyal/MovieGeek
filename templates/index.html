@@ -7,42 +7,41 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+<div class="container">
     <header>
         <h1>MovieGeek</h1>
     </header>
-    <div class = "wrap">
+    <div class = "search-container">
         <form method="post" action = "/">
-            <input type="text" name="moviename" placeholder="Search Movie">
-            <button type="submit">Search</button>
+            <input class = "search-box" type="text" name="moviename" placeholder="Search Movie">
+            <button class = "search-button" type="submit">Search</button>
         </form>
     </div>
 
 
     {% if not data["Error"] %}
-    <div class = "movie">
-        <h2>Movie Name : {{ data["Title"] }}</h2>
-        <div class = "details"> 
-            <div class = "poster">
-                <img src="{{data["Poster"]}}" alt="" width="300px" height = "430px">
-            </div>
-            <div class = "info">
-                <ul>
-                    <li>Released: {{data["Released"]}}</li>
-                    <li>Genre : {{data["Genre"]}}</li>
-                    <li>Rated : {{data["Rated"]}}</li>
-                    <li>Director : {{data["Director"]}}</li>
-                    <li>Writer : {{data["Writer"]}}</li>
-                    <li>Actors : {{data["Actors"]}}</li>
-                    <li>Plot : {{data["Plot"]}}</li>
-                </ul>
-            </div>
+    <div class = "details"> 
+        <div class="poster-card">
+            <img src="{{data["Poster"]}}" alt="" width="300px" class="movie-poster" height = "430px">
+        </div>
+        <div class="info-card">
+            <h2 class="movie-title">{{ data["Title"] }}</h2>
+            <p class="movie-meta"><strong>Released:</strong> {{data["Released"]}}</p>
+            <p><strong>Genre:</strong> {{data["Genre"]}}</p>
+            <p><strong>Director:</strong> {{data["Director"]}}</p>
+            <p><strong>Writer :</strong> {{data["Writer"]}}</p>
+            <p><strong>Actors:</strong> {{data["Actors"]}}</p>
+            <p class="movie-plot"><strong>Plot:</strong> {{data["Plot"]}}</p>
+            <p class="movie-rating"><strong>Rated :</strong>  {{data["Rated"]}}</p>
         </div>
     </div>
+    
     {% endif %}
 
 
     
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+</div>
 </body>
 </html>
