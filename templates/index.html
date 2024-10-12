@@ -4,39 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MovieGeek</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <header>
-        <h1>Welcome to MovieGeek</h1>
+        <h1>MovieGeek</h1>
     </header>
-    <div>
+    <div class = "wrap">
         <form method="post" action = "/">
             <input type="text" name="moviename" placeholder="Search Movie">
             <button type="submit">Search</button>
         </form>
     </div>
 
+
     {% if not data["Error"] %}
-    <div>
+    <div class = "movie">
         <h2>Movie Name : {{ data["Title"] }}</h2>
-    </div>
-    <div style="display: flex; gap: 20px;">
-        <div>
-            <img src="{{data["Poster"]}}" alt="" width="300px" height = "430px">
-        </div>
-        <div>
-            <ul>
-                <li>Released : {{data["Released"]}}</li>
-                <li>Genre : {{data["Genre"]}}</li>
-                <li>Rated : {{data["Rated"]}}</li>
-                <li>Director : {{data["Director"]}}</li>
-                <li>Writer : {{data["Writer"]}}</li>
-                <li>Actors : {{data["Actors"]}}</li>
-                <li>Plot : {{data["Plot"]}}</li>
-            </ul>
+        <div class = "details"> 
+            <div class = "poster">
+                <img src="{{data["Poster"]}}" alt="" width="300px" height = "430px">
+            </div>
+            <div class = "info">
+                <ul>
+                    <li>Released: {{data["Released"]}}</li>
+                    <li>Genre : {{data["Genre"]}}</li>
+                    <li>Rated : {{data["Rated"]}}</li>
+                    <li>Director : {{data["Director"]}}</li>
+                    <li>Writer : {{data["Writer"]}}</li>
+                    <li>Actors : {{data["Actors"]}}</li>
+                    <li>Plot : {{data["Plot"]}}</li>
+                </ul>
+            </div>
         </div>
     </div>
     {% endif %}
+
+
+    
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>

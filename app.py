@@ -12,6 +12,7 @@ if not API_KEY:
 
 
 app = Flask(__name__)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 def get_movie_details(moviename):
     url = f"https://www.omdbapi.com/?t={moviename}&apikey={API_KEY}"
@@ -37,6 +38,6 @@ def main():
     else:
         return render_template("index.html", data={"Error" : "No data found"})
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
     
