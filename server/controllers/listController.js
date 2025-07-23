@@ -6,7 +6,7 @@ export const getTrending = async (req,res)=>{
     const allowedTypes = ["all","movie","tv","person"]
 
     if (!validTime.includes(time)) {
-    return res.status(400).json({ error: 'Invalid search time' });
+        return res.status(400).json({ error: 'Invalid search time' });
     }
     if (!allowedTypes.includes(type)) {
     return res.status(400).json({ error: 'Invalid search type' });
@@ -29,33 +29,28 @@ export const getTrending = async (req,res)=>{
 
 export const getList = async (req,res) => {
     const {type,list} = req.params
-
+    const validTypes = ["movie","person","tv"]
     const validPaths = [
     "tv/airing_today",
     "tv/on_the_air",
-    "tv/popular",
     "tv/top_rated",
-    "person/popular",
     "movie/now_playing",
     "movie/top_rated",
-    "movie/popular",
     "movie/upcoming",
     ];  
 
-    const path = list ? `${type}/${list}` : type
-    
-    if (!validPaths.includes(path)) {
+    const path = list ? `${type}/${list}` : `${type}/popular`
+    if (!validTypes.includes(type) || (list && !validPaths.includes(`${type}/${list}`))) {
         return res.status(400).json({ error: "Invalid category path" });
     }
-    
+
     try {
-        const response = await axios.get(`${process.env.TMDB_BASE_URL}/${type}/${list}`,{
+        const response = await axios.get(`${process.env.TMDB_BASE_URL}/${path}`,{
             headers: {
                 accept: "application/json",
                 Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
             },  
         })
-        console.log(path);
         res.status(200).json(response.data.results);
     } catch (error) {
         res.status(500).json({ error: "Failed to fetch category data" });
