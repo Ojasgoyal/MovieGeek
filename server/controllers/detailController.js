@@ -9,7 +9,7 @@ export const getDetails = async (req , res) => {
     }
 
     try {
-        const response = await axios.get(`https://api.themoviedb.org/3/${type}/${id}`,{
+        const response = await axios.get(`${process.env.TMDB_BASE_URL}/${type}/${id}`,{
             headers: {
                 accept: "application/json",
                 Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,

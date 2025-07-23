@@ -14,7 +14,7 @@ export const search = async (req , res) => {
     }
 
     try {
-        const response = await axios.get(`https://api.themoviedb.org/3/search/${type}`,{
+        const response = await axios.get(`${process.env.TMDB_BASE_URL}/search/${type}`,{
             params:{query,
             include_adult: false, 
             language: 'en-US',
@@ -23,13 +23,13 @@ export const search = async (req , res) => {
             headers: {
                 accept: "application/json",
                 Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
-            },            
+            },
         })  
         const results = response.data.results
         console.log("✅ Searched Successfully")
         res.status(200).json(results);  
     } catch (error) {
-    console.error("TMDB API error:", error.message);
-    res.status(500).json({ error: `Failed to fetch data from TMDB` });
+        console.error("TMDB API error:", error);
+        res.status(500).json({ error: `Failed to fetch data from TMDB` });
     }
 }

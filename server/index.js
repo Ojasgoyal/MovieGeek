@@ -6,6 +6,8 @@ import searchRoutes from "./routes/searchRoutes.js";
 import authRoutes from './routes/authRoutes.js';
 import detailRoutes from "./routes/detailRoutes.js";
 import userRoutes from "./routes/userRoutes.js"
+import listRoutes from "./routes/listRoutes.js"
+import trendingRoutes from "./routes/trendingRoutes.js"
 
 
 dotenv.config();
@@ -18,6 +20,8 @@ app.use(cors());
 app.use(express.json());
 app.use("/api", searchRoutes);
 app.use("/api/details", detailRoutes);
+app.use("/api/trending", trendingRoutes);
+app.use("/api/list", listRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 
