@@ -34,11 +34,12 @@ export const toggleFollow = async (req,res) => {
 
 export const getfollowers = async (req,res) =>{
     try {
-        const userId = req.user.userId
+        const username = req.params.username;
+        const targetUser = await User.findOne({ username });
+        const userId = targetUser._id;
         const followers = await Follow.find({following:userId})
         .populate("follower", "username name avatarUrl")
         .sort({ followedAt: -1 })
-        .exec();
 
         res.status(200).json({ followers: followers.map(f => f.follower) });
     } catch (error) {
@@ -47,11 +48,12 @@ export const getfollowers = async (req,res) =>{
 }
 export const getfollowing = async (req,res) =>{
     try {
-        const userId = req.user.userId
+        const username = req.params.username;
+        const targetUser = await User.findOne({ username });
+        const userId = targetUser._id;
         const following = await Follow.find({follower:userId})
         .populate("following", "username name avatarUrl")
         .sort({ followedAt: -1 })
-        .exec();
 
         res.status(200).json({ following: following.map(f => f.following) });
     } catch (error) {
