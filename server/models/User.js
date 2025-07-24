@@ -20,22 +20,6 @@ const userSchema = new mongoose.Schema({
   },
   bio: String,
   avatarUrl: String,
-  followers: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  }],
-  following: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  }],
-  saved: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Movie',
-  }],
-  watched: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Movie',
-  }],
 }, { timestamps: true });
 
 export default mongoose.model('User', userSchema);

@@ -8,6 +8,7 @@ import detailRoutes from "./routes/detailRoutes.js";
 import userRoutes from "./routes/userRoutes.js"
 import listRoutes from "./routes/listRoutes.js"
 import trendingRoutes from "./routes/trendingRoutes.js"
+import followRoutes from "./routes/followRoutes.js"
 
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.use("/api/trending", trendingRoutes);
 app.use("/api/list", listRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/users", followRoutes);
 
 app.get('/',(req,res) => {
     res.send('Welcome to MovieGeek APP')

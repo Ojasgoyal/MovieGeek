@@ -8,7 +8,7 @@ router.get('/:type/week',  (req,res)=>{
     return getTrending(req,res);
 })
 
-router.get('/:type/', (req,res)=>{
+router.get('/:type', (req,res)=>{
     req.params.time = 'day';
     return getTrending(req,res);
 })
