@@ -16,7 +16,7 @@ export const getUserProfile = async (req ,res) => {
 export const updateUserProfile = async (req,res)=>{
     try {
         const {username} = req.params
-        const allowedFields = ["name", "bio", "avatarUrl"];
+        const allowedFields = ["name", "bio"];
 
         const updates = Object.keys(req.body);
         const isValid = updates.every((field) => allowedFields.includes(field));
@@ -28,6 +28,10 @@ export const updateUserProfile = async (req,res)=>{
         updates.forEach((field) => {
         update[field] = req.body[field];
         });
+
+        if (req.file && req.file.path) {
+        update.avatarUrl = req.file.path;
+        }        
 
         const updatedUser = await User.findOneAndUpdate({username},update,{
             new:true,

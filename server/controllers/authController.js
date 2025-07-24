@@ -4,25 +4,25 @@ import jwt from "jsonwebtoken"
 
 export const registerUser = async (req , res) => {
     try {
-        const {username , email , password } = req.body
+        const {name , username , email , password } = req.body
 
         if(!username || !email || !password){
             return res.status(400).json({ error: "All fields are required" })
 
         }
 
-        const existingUser = await User.findOne({email})
-        const existingUsername = await User.findOne({username})
+        const existingUser = await User.findOne({
+            $or: [{email},{username}]
+        })
         if(existingUser){
-            return res.status(409).json({ error: "Email already in use" })
-        } else if(existingUsername){
-            return res.status(409).json({ error: "Username already in use" })
+            return res.status(409).json({ error: "User already exists" })
         }
-
+        
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const user = new User({
+            name,
             username,
             email,
             password : hashedPassword,
