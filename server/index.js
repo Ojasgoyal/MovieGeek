@@ -9,6 +9,8 @@ import userRoutes from "./routes/userRoutes.js"
 import listRoutes from "./routes/listRoutes.js"
 import trendingRoutes from "./routes/trendingRoutes.js"
 import followRoutes from "./routes/followRoutes.js"
+import userListRoutes from "./routes/userListRoutes.js"
+import listMovieRoutes from "./routes/listMovieRoutes.js"
 
 
 dotenv.config();
@@ -19,13 +21,15 @@ const MONGO_URI = process.env.MONGO_URI
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use("/api", searchRoutes);
-app.use("/api/details", detailRoutes);
-app.use("/api/trending", trendingRoutes);
-app.use("/api/list", listRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/users", followRoutes);
+app.use("/user", userRoutes);
+app.use("/user", followRoutes);
+app.use("/user", userListRoutes);
+app.use("/trending", trendingRoutes);
+app.use("/", authRoutes);
+app.use("/", searchRoutes);
+app.use("/detail", detailRoutes);
+app.use("/detail", listMovieRoutes);
+app.use("/list", listRoutes);
 
 app.get('/',(req,res) => {
     res.send('Welcome to MovieGeek APP')

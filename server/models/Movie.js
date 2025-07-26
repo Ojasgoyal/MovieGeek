@@ -8,6 +8,7 @@ const movieSchema = new mongoose.Schema({
   title: String,
   overview: String,
   genres: [String],
+  genreIds: [{ type: Number }],
   releaseDate: Date,
   runtime: String,
   posterUrl: String,
@@ -16,6 +17,10 @@ const movieSchema = new mongoose.Schema({
   voteCount: Number,
   language: String,
   popularity: Number,
+  type: {
+    type: String,
+    enum: ['movie', 'tv'] 
+  },
 }, { timestamps: true }); // adds createdAt and updatedAt
 
 export default mongoose.model('Movie', movieSchema);
