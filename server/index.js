@@ -1,7 +1,8 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import logger from './utils/logger.js';
 import morgan from "morgan";
 import searchRoutes from "./routes/searchRoutes.js";
@@ -15,7 +16,6 @@ import userListRoutes from "./routes/userListRoutes.js"
 import listMovieRoutes from "./routes/listMovieRoutes.js"
 
 
-dotenv.config();
 
 const PORT = process.env.PORT || 5000
 const MONGO_URI = process.env.MONGO_URI
