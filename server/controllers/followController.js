@@ -25,9 +25,7 @@ export const toggleFollow = async (req,res) => {
             await Follow.create({ follower: followerId, following: followingId });
             return res.json({ message: 'Followed successfully' });
         }
-    } catch (error) {
-        console.log(error);
-        
+    } catch (error) {      
         return res.status(500).json({ error: "Could not Follow Server error" });
     }
 }

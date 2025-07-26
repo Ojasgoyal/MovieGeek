@@ -16,10 +16,8 @@ export const getDetails = async (req , res) => {
             },            
         })  
         const results = response.data
-        console.log("✅ Fetched details Successfully")
         res.status(200).json(results);  
     } catch (error) {
-    console.error("TMDB API error:", error.message);
     res.status(500).json({ error: `Failed to fetch data from TMDB` });
     }
 }

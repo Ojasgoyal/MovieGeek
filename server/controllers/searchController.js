@@ -26,10 +26,8 @@ export const search = async (req , res) => {
             },
         })  
         const results = response.data.results
-        console.log("✅ Searched Successfully")
         res.status(200).json(results);  
     } catch (error) {
-        console.error("TMDB API error:", error);
         res.status(500).json({ error: `Failed to fetch data from TMDB` });
     }
 }

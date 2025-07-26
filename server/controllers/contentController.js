@@ -21,7 +21,6 @@ export const getContent = async (req,res)=>{
             },            
         }) 
         const results = response.data
-        console.log("✅ Fetched details Successfully")
         res.status(200).json(results); 
     } catch (err) {
         return res.status(500).json({ error: 'Failed to fetch from TMDB' });
