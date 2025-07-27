@@ -19,7 +19,10 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   bio: String,
-  avatarUrl: String,
+  avatar: {
+    url: String,
+    public_id: String
+  }
 }, { timestamps: true });
 
 export default mongoose.model('User', userSchema);

@@ -1,16 +1,17 @@
-import cloudinary from "../config/cloudinary.js";
-import { CloudinaryStorage } from "multer-storage-cloudinary";
 import multer from "multer";
 
-const storage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: "avatars", // or your desired folder
-    allowed_formats: ["jpg", "jpeg", "png"],
-    transformation: [{ width: 500, height: 500, crop: "limit" }],
+const storage = multer.memoryStorage(); // hold file in memory
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // max 5MB (optional)
+  fileFilter: (req, file, cb) => {
+    if (!file.mimetype.startsWith("image/")) {
+      cb(new Error("Only image files are allowed!"), false);
+    } else {
+      cb(null, true);
+    }
   },
 });
-
-const upload = multer({ storage });
 
 export default upload;
