@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
 import cors from 'cors';
+import cookieParser from "cookie-parser";
 import mongoose from 'mongoose';
 import logger from './utils/logger.js';
 import morgan from "morgan";
@@ -23,6 +24,7 @@ const MONGO_URI = process.env.MONGO_URI
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 const morganFormat = ":method :url :status :response-time ms";
 
