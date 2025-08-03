@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs"
 export const getUserProfile = async (req ,res) => {
     try {
         const { username } = req.params
-        const user = await User.findOne({username}).select("-password").populate("username name avatar.url");
+        const user = await User.findOne({username}).select("-password -refreshToken").populate("username name avatar.url");
 
         if (!user) return res.status(404).json({ error: "User not found" });
         res.json(user);
@@ -67,7 +67,7 @@ export const updateUserProfile = async (req,res)=>{
             new:true,
             runValidators: true,
 
-        }).select("-password");
+        }).select("-password -refreshToken");
 
         if (!updatedUser) return res.status(404).json({ error: "User not found" });
         res.json(updatedUser);

@@ -125,7 +125,7 @@ export const refreshAccessToken = async (req,res) => {
 
 export const logoutUser = async (req, res) => {
   const token = req.cookies.refreshToken;
-  if (!token) return res.sendStatus(204); // No content
+  if (!token) return res.status(401).json({ error: "No refresh token" });
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);

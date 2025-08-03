@@ -36,7 +36,7 @@ export const getfollowers = async (req,res) =>{
         const targetUser = await User.findOne({ username });
         const userId = targetUser._id;
         const followers = await Follow.find({following:userId})
-        .populate("follower", "username name avatarUrl")
+        .populate("follower", "username name bio avatar.url")
         .sort({ followedAt: -1 })
 
         res.status(200).json({ followers: followers.map(f => f.follower) });
@@ -50,7 +50,7 @@ export const getfollowing = async (req,res) =>{
         const targetUser = await User.findOne({ username });
         const userId = targetUser._id;
         const following = await Follow.find({follower:userId})
-        .populate("following", "username name avatarUrl")
+        .populate("following", "username name bio avatar.url")
         .sort({ followedAt: -1 })
 
         res.status(200).json({ following: following.map(f => f.following) });
