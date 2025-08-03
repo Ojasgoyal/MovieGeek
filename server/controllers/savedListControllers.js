@@ -8,7 +8,6 @@ export const getListItems = async (req,res)=>{
         const {status} = req.query;
         const {username} = req.params
         
-        
         const user = await User.findOne({username})
         if(!user) return res.status(404).json({error : "User Not Found"})
         
@@ -36,8 +35,14 @@ export const addToList = async (req,res) =>{
         const {type , id} = req.params
         const userId = req.user.userId
         const {status} = req.body
+        const validTypes = ["movie","tv"]
 
         let movie = await Movie.findById(id);
+
+        if(!validTypes.includes(type)){
+            return res.status(400).json({ error: `Can't add ${type} to list` });
+        }
+        
         if (!movie){
             const {data} = await axios.get(`${process.env.TMDB_BASE_URL}/${type}/${id}`,{
                 headers: {
@@ -72,7 +77,7 @@ export const addToList = async (req,res) =>{
         res.status(201).json({ message: "Added to list" });
 
     } catch (error) {
-            res.status(500).json({ error: "Failed to add to list" });
+        res.status(500).json({ error: "Failed to add to list" });
     }
 }
 

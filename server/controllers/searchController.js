@@ -4,7 +4,7 @@ export const search = async (req , res) => {
     const type = req.params.type
     const query = req.query.query
     const allowedTypes = ['multi', 'movie', 'tv', 'person'];
-
+    const page = req.query.page || 1;
     if (!allowedTypes.includes(type)) {
     return res.status(400).json({ error: 'Invalid search type' });
     }
@@ -18,7 +18,7 @@ export const search = async (req , res) => {
             params:{query,
             include_adult: false, 
             language: 'en-US',
-            page: 1
+            page: page
             },
             headers: {
                 accept: "application/json",

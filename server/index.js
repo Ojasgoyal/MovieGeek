@@ -45,15 +45,15 @@ app.use(
 );
 
 
-app.use("/user", userRoutes);
-app.use("/user", followRoutes);
-app.use("/user", userListRoutes);
-app.use("/trending", trendingRoutes);
-app.use("/", authRoutes);
-app.use("/", searchRoutes);
-app.use("/detail", detailRoutes);
-app.use("/detail", listMovieRoutes);
-app.use("/list", listRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/user", followRoutes);
+app.use("/api/user", userListRoutes);
+app.use("/api/trending", trendingRoutes);
+app.use("/api", authRoutes);
+app.use("/api", searchRoutes);
+app.use("/api/detail", detailRoutes);
+app.use("/api/detail", listMovieRoutes);
+app.use("/api/list", listRoutes);
 
 app.get('/',(req,res) => {
     res.send('Welcome to MovieGeek APP')

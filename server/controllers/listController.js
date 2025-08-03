@@ -4,6 +4,7 @@ export const getTrending = async (req,res)=>{
     const {type,time} = req.params
     const validTime = ["day","week"]
     const allowedTypes = ["all","movie","tv","person"]
+    const page = req.query.page || 1;
 
     if (!validTime.includes(time)) {
         return res.status(400).json({ error: 'Invalid search time' });
@@ -14,6 +15,9 @@ export const getTrending = async (req,res)=>{
     
     try {
         const response = await axios.get(`${process.env.TMDB_BASE_URL}/trending/${type}/${time}`,{
+            params:{
+                page:page
+            },  
             headers: {
                 accept: "application/json",
                 Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
@@ -38,7 +42,7 @@ export const getList = async (req,res) => {
     "movie/top_rated",
     "movie/upcoming",
     ];  
-
+    const page = req.query.page || 1;
     const path = list ? `${type}/${list}` : `${type}/popular`
     if (!validTypes.includes(type) || (list && !validPaths.includes(`${type}/${list}`))) {
         return res.status(400).json({ error: "Invalid category path" });
@@ -46,6 +50,9 @@ export const getList = async (req,res) => {
 
     try {
         const response = await axios.get(`${process.env.TMDB_BASE_URL}/${path}`,{
+            params:{
+                page:page
+            },
             headers: {
                 accept: "application/json",
                 Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
