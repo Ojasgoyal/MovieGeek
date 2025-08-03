@@ -2,6 +2,8 @@ import User from "../models/User.js";
 import cloudinary from "../config/cloudinary.js";
 import streamifier from "streamifier";
 import bcrypt from "bcryptjs"
+import List from "../models/List.js";
+import Follow from "../models/Follow.js";
 
 export const getUserProfile = async (req ,res) => {
     try {
@@ -9,7 +11,25 @@ export const getUserProfile = async (req ,res) => {
         const user = await User.findOne({username}).select("-password -refreshToken").populate("username name avatar.url");
 
         if (!user) return res.status(404).json({ error: "User not found" });
-        res.json(user);
+        
+        const [watchedCount, watchlistCount, favoritesCount, followersCount, followingCount] = await Promise.all([
+        List.countDocuments({ user: user._id, status: 'watched' }),
+        List.countDocuments({ user: user._id, status: 'watchlist' }),
+        List.countDocuments({ user: user._id, status: 'favorites' }),
+        Follow.countDocuments({ following: user._id }),
+        Follow.countDocuments({ follower: user._id }),
+        ]);
+ 
+        res.json({
+            user,
+            stats: {
+                watchedCount,
+                watchlistCount,
+                favoritesCount,
+                followersCount,
+                followingCount,
+            }
+        });
 
     } catch (error) {
         res.status(500).json({ error: "Server error" });
