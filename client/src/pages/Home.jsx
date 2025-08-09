@@ -1,6 +1,7 @@
 import axios from "axios";
 import Section from "../components/Section";
 import { useEffect, useState } from "react";
+import ToggleButtons from "../components/ToggleButtons";
 
 export default function Home() {
   const [movieTime, setMovieTime] = useState(false);
@@ -8,14 +9,10 @@ export default function Home() {
 
   const [randomPosterUrl, setRandomPosterUrl] = useState("");
 
-  function toggleMovie(isWeek) {
-    setMovieTime(isWeek);
-  }
-  function toggleTv(isWeek) {
-    setTvTime(isWeek);
-  }
+  const toggleMovie = (isWeek) => setMovieTime(isWeek);
+  const toggleTv = (isWeek) => setTvTime(isWeek);
 
-  async function getTrending(type, time = "") {
+  const getTrending = async (type, time = "") => {
     try {
       let url = "";
       if (time.trim() === "week") {
@@ -29,7 +26,7 @@ export default function Home() {
     } catch (error) {
       console.error("Error fetching movie data:", error);
     }
-  }
+  };
 
   const [movieData, setMovieData] = useState({
     movieDay: null,
@@ -39,42 +36,46 @@ export default function Home() {
   });
 
   useEffect(() => {
-    async function fetchAllTrending() {
-      const [movieDay, movieWeek, tvDay, tvWeek] = await Promise.all([
-        getTrending("movie"),
-        getTrending("movie", "week"),
-        getTrending("tv"),
-        getTrending("tv", "week"),
-      ]);
-      setMovieData({ movieDay, movieWeek, tvDay, tvWeek });
-    }
+    const fetchAllTrending = async () => {
+      try {
+        const [movieDay, movieWeek, tvDay, tvWeek, popularMovies] =
+          await Promise.all([
+            getTrending("movie"),
+            getTrending("movie", "week"),
+            getTrending("tv"),
+            getTrending("tv", "week"),
+            axios
+              .get("http://localhost:5000/api/list/movie")
+              .then((res) => res.data),
+          ]);
+
+        setMovieData({ movieDay, movieWeek, tvDay, tvWeek });
+
+        // Pick a random hero from popular movies
+        if (popularMovies?.length) {
+          const validMovies = popularMovies.filter(
+            (m) => m.backdrop_path
+          );
+          if (validMovies.length) {
+            const randomMovie =
+              validMovies[Math.floor(Math.random() * validMovies.length)];
+            setRandomPosterUrl(
+              `https://image.tmdb.org/t/p/original${randomMovie.backdrop_path}`
+            );
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching all data:", err);
+      }
+    };
+
     fetchAllTrending();
   }, []);
-
-  useEffect(() => {
-    if (!movieData.movieWeek || !movieData.movieWeek.results) return;
-    async function fetchRandomPoster() {
-      try {
-        const validMovies = movieData.movieWeek.results.filter(
-          (m) => m.backdrop_path
-        );
-        const randomMovie =
-          validMovies[Math.floor(Math.random() * validMovies.length)];
-        setRandomPosterUrl(
-          `https://image.tmdb.org/t/p/original${randomMovie.backdrop_path}`
-        );
-      } catch (err) {
-        console.error("Error fetching poster:", err);
-      }
-    }
-
-    fetchRandomPoster();
-  }, [movieData.movieWeek]);
 
   return (
     <main className="min-h-screen bg-slate-50 flex flex-col">
       {/* Hero Section */}
-      <section className="relative flex flex-col justify-center w-full items-center h-[100vh]">
+      <section className="relative flex flex-col justify-center w-full items-center h-[95vh]">
         {/* Background image */}
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -82,7 +83,7 @@ export default function Home() {
             backgroundImage: `url(${randomPosterUrl})`,
           }}
         ></div>
-
+        <div className="absolute inset-0 bg-black/30"></div>
         <form
           className="relative w-full max-w-4xl z-10"
           onSubmit={(e) => e.preventDefault()}
@@ -102,24 +103,7 @@ export default function Home() {
       <section className="py-12 px-4" id="trending-movies">
         <h2 className="text-2xl font-bold text-center">Trending Movies</h2>
         <div className="relative mb-6 max-w-6xl pl-5 mx-auto">
-          <div className="flex bg-white border border-black rounded-full p-1 w-fit shadow-sm">
-            <button
-              onClick={() => toggleMovie(false)}
-              className={`px-3 py-1 text-sm rounded-full transition-all ${
-                !movieTime ? "bg-black text-white" : "text-black"
-              }`}
-            >
-              Today
-            </button>
-            <button
-              onClick={() => toggleMovie(true)}
-              className={`px-3 py-1 text-sm rounded-full transition-all ${
-                movieTime ? "bg-black text-white" : "text-black"
-              }`}
-            >
-              This Week
-            </button>
-          </div>
+          <ToggleButtons active={movieTime} onChange={toggleMovie} />
         </div>
 
         <Section
@@ -129,24 +113,7 @@ export default function Home() {
       <section className="py-12 px-4" id="trending-shows">
         <h2 className="text-2xl font-bold text-center">Trending Shows</h2>
         <div className="relative mb-6 max-w-6xl pl-5 mx-auto">
-          <div className="flex bg-white border border-black rounded-full p-1 w-fit shadow-sm">
-            <button
-              onClick={() => toggleTv(false)}
-              className={`px-3 py-1 text-sm rounded-full transition-all ${
-                !tvTime ? "bg-black text-white" : "text-black"
-              }`}
-            >
-              Today
-            </button>
-            <button
-              onClick={() => toggleTv(true)}
-              className={`px-3 py-1 text-sm rounded-full transition-all ${
-                tvTime ? "bg-black text-white" : "text-black"
-              }`}
-            >
-              This Week
-            </button>
-          </div>
+          <ToggleButtons active={tvTime} onChange={toggleTv} />
         </div>
         <Section movieData={!tvTime ? movieData.tvDay : movieData.tvWeek} />
       </section>
