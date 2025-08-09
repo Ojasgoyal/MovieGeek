@@ -15,6 +15,7 @@ export default function Navbar() {
   }, []);
 
   return (
+    <>
     <header
       role="banner"
       className={`sticky top-0 z-40 w-full transition-colors duration-300 ${
@@ -120,7 +121,7 @@ export default function Navbar() {
           </div>
         </nav>
       </div>
-
+    </header>
       {/* Mobile drawer */}
       {drawerOpen && (
         <div
@@ -167,6 +168,7 @@ export default function Navbar() {
           </div>
         </div>
       </aside>
-    </header>
+
+    </>
   );
 }
