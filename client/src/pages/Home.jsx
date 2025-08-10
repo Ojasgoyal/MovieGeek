@@ -152,6 +152,7 @@ export default function Home() {
           }`}
         >
           <Section
+            type={"movie"}
             movieData={!movieTime ? movieData.movieDay : movieData.movieWeek}
           />
         </div>
@@ -166,7 +167,7 @@ export default function Home() {
             animatingTv ? "opacity-0" : "opacity-100 blur-0"
           }`}
         >
-          <Section movieData={!tvTime ? movieData.tvDay : movieData.tvWeek} />
+          <Section type={"tv"} movieData={!tvTime ? movieData.tvDay : movieData.tvWeek} />
         </div>
       </section>
     </main>

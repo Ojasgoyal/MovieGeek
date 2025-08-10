@@ -56,10 +56,10 @@ export default function Navbar() {
             <Dropdown
               label="Movies"
               items={[
-                { to: "/movies/popular", label: "Popular" },
-                { to: "/movies/now-playing", label: "Now Playing" },
-                { to: "/movies/upcoming", label: "Upcoming" },
-                { to: "/movies/top-rated", label: "Top Rated" },
+                { to: "/movie/popular", label: "Popular" },
+                { to: "/movie/now_playing", label: "Now Playing" },
+                { to: "/movie/upcoming", label: "Upcoming" },
+                { to: "/movie/top_rated", label: "Top Rated" },
               ]}
               scrolled
             />
@@ -67,15 +67,15 @@ export default function Navbar() {
               label="TV Shows"
               items={[
                 { to: "/tv/popular", label: "Popular" },
-                { to: "/tv/airing-today", label: "Airing Today" },
-                { to: "/tv/on-the-air", label: "On the Air" },
-                { to: "/movies/top-rated", label: "Top Rated" },
+                { to: "/tv/airing_today", label: "Airing Today" },
+                { to: "/tv/on_the_air", label: "On the Air" },
+                { to: "/tv/top_rated", label: "Top Rated" },
               ]}
               scrolled
             />
             <Dropdown
               label="People"
-              items={[{ to: "/people/popular", label: "Popular People" }]}
+              items={[{ to: "/person/popular", label: "Popular People" }]}
               scrolled
             />
           </div>
@@ -138,14 +138,17 @@ export default function Navbar() {
         <div className="p-4 space-y-4">
           <div>
             <h3 className="font-semibold text-gray-700">Movies</h3>
-            <Link to="/movies/popular" className="block px-2 py-1">
+            <Link to="/movie/popular" className="block px-2 py-1">
               Popular
             </Link>
-            <Link to="/movies/now-playing" className="block px-2 py-1">
+            <Link to="/movie/now_playing" className="block px-2 py-1">
               Now Playing
             </Link>
-            <Link to="/movies/upcoming" className="block px-2 py-1">
+            <Link to="/movie/upcoming" className="block px-2 py-1">
               Upcoming
+            </Link>
+            <Link to="/movie/top_rated" className="block px-2 py-1">
+              Top Rated
             </Link>
           </div>
           <div>
@@ -153,16 +156,19 @@ export default function Navbar() {
             <Link to="/tv/popular" className="block px-2 py-1">
               Popular
             </Link>
-            <Link to="/tv/airing-today" className="block px-2 py-1">
+            <Link to="/tv/airing_today" className="block px-2 py-1">
               Airing Today
             </Link>
-            <Link to="/tv/on-the-air" className="block px-2 py-1">
+            <Link to="/tv/on_the_air" className="block px-2 py-1">
               On the Air
+            </Link>
+            <Link to="/tv/top_rated" className="block px-2 py-1">
+              Top Rated
             </Link>
           </div>
           <div>
             <h3 className="font-semibold text-gray-700">People</h3>
-            <Link to="/people/popular" className="block px-2 py-1">
+            <Link to="/person/popular" className="block px-2 py-1">
               Popular People
             </Link>
           </div>

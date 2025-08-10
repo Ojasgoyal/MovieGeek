@@ -3,6 +3,8 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Navbar from './components/Navbar'
+import List from './pages/List'
+import NotFound from './pages/NotFound'
 
 function App() {
 
@@ -13,6 +15,8 @@ function App() {
     <Navbar />
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/:type/:list" element={<List />} />
+      <Route path="/404" element={<NotFound />} />
     </Routes>
     </div>
     </>
