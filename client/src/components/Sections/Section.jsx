@@ -1,4 +1,4 @@
-import MovieCard from "./MovieCard"
+import MovieCard from "../Cards/MovieCard"
 
 function Section({movieData,type}) {
   return (

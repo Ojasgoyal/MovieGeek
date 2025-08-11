@@ -1,5 +1,5 @@
 import { useParams, Navigate } from "react-router-dom";
-import ListSection from "../components/ListSection";
+import ListSection from "../components/Sections/ListSection";
 import { useEffect, useState } from "react";
 import axios from "axios";
 

@@ -1,5 +1,5 @@
-import MovieCard from "./MovieCard"
-import PersonCard from "./PersonCard"
+import MovieCard from "../Cards/MovieCard"
+import PersonCard from "../Cards/PersonCard"
 
 function ListSection({itemData,type}) {
   
