@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
-import Navbar from './components/Navbar'
+import Navbar from './components/Navfolder/Navbar.jsx'
 import List from './pages/List'
 import NotFound from './pages/NotFound'
 

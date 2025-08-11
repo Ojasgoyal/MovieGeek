@@ -5,6 +5,7 @@ function PersonCard({person}) {
 
   return (
     <div className="person-card relative group">
+      <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity z-5 pointer-events-none"></div>
       <div className="person-poster ">
         <Link to={`/person/${person.id}`}>
           <img
