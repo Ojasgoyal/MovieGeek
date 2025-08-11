@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Dropdown from "./Dropdown";
+import Dropdown from "../Dropdown";
 import { FaRegUserCircle } from "react-icons/fa";
+import NavbarLinks from "./NavLinks";
+import MobileDrawer from "./MobileDrawer";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false); // account menu
@@ -52,33 +54,7 @@ export default function Navbar() {
           </div>
 
           {/* Desktop dropdowns */}
-          <div className="hidden md:flex flex-1 items-center justify-center gap-6 order-2">
-            <Dropdown
-              label="Movies"
-              items={[
-                { to: "/movie/popular", label: "Popular" },
-                { to: "/movie/now_playing", label: "Now Playing" },
-                { to: "/movie/upcoming", label: "Upcoming" },
-                { to: "/movie/top_rated", label: "Top Rated" },
-              ]}
-              scrolled
-            />
-            <Dropdown
-              label="TV Shows"
-              items={[
-                { to: "/tv/popular", label: "Popular" },
-                { to: "/tv/airing_today", label: "Airing Today" },
-                { to: "/tv/on_the_air", label: "On the Air" },
-                { to: "/tv/top_rated", label: "Top Rated" },
-              ]}
-              scrolled
-            />
-            <Dropdown
-              label="People"
-              items={[{ to: "/person/popular", label: "Popular People" }]}
-              scrolled
-            />
-          </div>
+          <NavbarLinks />
 
           {/* Mobile account menu */}
           <div className="flex md:hidden flex-1 items-center justify-end order-3 relative">
@@ -123,58 +99,7 @@ export default function Navbar() {
       </div>
     </header>
       {/* Mobile drawer */}
-      {drawerOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-30"
-          onClick={() => setDrawerOpen(false)}
-        />
-      )}
-      <aside
-        aria-hidden={!drawerOpen}
-        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 z-40 ${
-          drawerOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <div className="p-4 space-y-4">
-          <div>
-            <h3 className="font-semibold text-gray-700">Movies</h3>
-            <Link to="/movie/popular" className="block px-2 py-1">
-              Popular
-            </Link>
-            <Link to="/movie/now_playing" className="block px-2 py-1">
-              Now Playing
-            </Link>
-            <Link to="/movie/upcoming" className="block px-2 py-1">
-              Upcoming
-            </Link>
-            <Link to="/movie/top_rated" className="block px-2 py-1">
-              Top Rated
-            </Link>
-          </div>
-          <div>
-            <h3 className="font-semibold text-gray-700">TV Shows</h3>
-            <Link to="/tv/popular" className="block px-2 py-1">
-              Popular
-            </Link>
-            <Link to="/tv/airing_today" className="block px-2 py-1">
-              Airing Today
-            </Link>
-            <Link to="/tv/on_the_air" className="block px-2 py-1">
-              On the Air
-            </Link>
-            <Link to="/tv/top_rated" className="block px-2 py-1">
-              Top Rated
-            </Link>
-          </div>
-          <div>
-            <h3 className="font-semibold text-gray-700">People</h3>
-            <Link to="/person/popular" className="block px-2 py-1">
-              Popular People
-            </Link>
-          </div>
-        </div>
-      </aside>
-
+      <MobileDrawer drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
     </>
   );
 }
