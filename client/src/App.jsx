@@ -5,6 +5,8 @@ import Home from './pages/Home'
 import Navbar from './components/Navfolder/Navbar.jsx'
 import List from './pages/List'
 import NotFound from './pages/NotFound'
+import Movie from "./pages/Movie"
+import RouteLayout from './pages/RouteLayout'
 
 function App() {
 
@@ -14,7 +16,8 @@ function App() {
     <Navbar />
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/:type/:list" element={<List />} />
+      <Route path="/:type/:param2" element={<RouteLayout/>} />
+      <Route path="/404" element={<NotFound />} />
       <Route path="/404" element={<NotFound />} />
     </Routes>
     </>

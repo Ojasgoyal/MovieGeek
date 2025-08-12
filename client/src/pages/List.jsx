@@ -5,7 +5,7 @@ import axios from "axios";
 import SearchBar from "../components/SearchBar/SearchBar";
 
 export default function List() {
-  const { type, list } = useParams();
+  const { type, param2:list } = useParams();
   const [data, setData] = useState([]);
   const [showList, setShowList] = useState(false);
 
@@ -36,7 +36,7 @@ export default function List() {
     }
   }
 
-  const isNotValid = !validTypes.includes(type) || !validPaths.includes(path);
+  const isNotValid = !validPaths.includes(path);
 
   useEffect(() => {
     if(isNotValid)
