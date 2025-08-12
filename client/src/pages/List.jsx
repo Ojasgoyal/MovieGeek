@@ -2,6 +2,7 @@ import { useParams, Navigate } from "react-router-dom";
 import ListSection from "../components/Sections/ListSection";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import SearchBar from "../components/SearchBar/SearchBar";
 
 export default function List() {
   const { type, list } = useParams();
@@ -63,12 +64,21 @@ export default function List() {
   };
 
   const sectionTitle = titleMap[list] || list;
-
+  let typeName = ""
+  if(type === 'person'){
+    typeName = "People"
+  } else if(type === 'movie'){
+   typeName = `${type}s`
+  } else {
+    typeName = `Shows`
+  }
+  
   return (
     <>
-      <div className="flex flex-col justify-center items-center py-8 px-4">
+      <SearchBar/>
+      <div className="flex flex-col mt-4 justify-center items-center py-8 px-4">
         <h2 className="text-3xl md:text-4xl font-bold tracking-tight capitalize">
-          {sectionTitle}
+          {sectionTitle} {typeName}
         </h2>
         <div
           className={`mt-6 w-full max-w-7xl fade-container ${

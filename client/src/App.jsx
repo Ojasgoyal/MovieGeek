@@ -11,14 +11,12 @@ function App() {
   
   return (
     <>
-    <div className=''>
     <Navbar />
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/:type/:list" element={<List />} />
       <Route path="/404" element={<NotFound />} />
     </Routes>
-    </div>
     </>
   )
 }
