@@ -16,7 +16,8 @@ export const getTrending = async (req,res)=>{
     try {
         const response = await axios.get(`${process.env.TMDB_BASE_URL}/trending/${type}/${time}`,{
             params:{
-                page:page
+                page:page,
+                region:"in"
             },  
             headers: {
                 accept: "application/json",
@@ -51,7 +52,8 @@ export const getList = async (req,res) => {
     try {
         const response = await axios.get(`${process.env.TMDB_BASE_URL}/${path}`,{
             params:{
-                page:page
+                page:page,
+                region:"in",
             },
             headers: {
                 accept: "application/json",
