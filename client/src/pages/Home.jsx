@@ -1,5 +1,5 @@
 import axios from "axios";
-import Section from "../components/Sections/Section";
+import ListSection from "../components/Sections/ListSection";
 import { useEffect, useState } from "react";
 import ToggleButtons from "../components/ToggleButtons";
 import SearchBar from "../components/SearchBar/SearchBar";
@@ -129,9 +129,9 @@ export default function Home() {
             animating ? "opacity-0" : "opacity-100 blur-0"
           }`}
         >
-          <Section
+          <ListSection
             type={"movie"}
-            movieData={!movieTime ? movieData.movieDay : movieData.movieWeek}
+            itemData={!movieTime ? movieData.movieDay?.results : movieData.movieWeek?.results}
           />
         </div>
       </section>
@@ -145,7 +145,7 @@ export default function Home() {
             animatingTv ? "opacity-0" : "opacity-100 blur-0"
           }`}
         >
-          <Section type={"tv"} movieData={!tvTime ? movieData.tvDay : movieData.tvWeek} />
+          <ListSection type={"tv"} itemData={!tvTime ? movieData.tvDay?.results : movieData.tvWeek?.results} />
         </div>
       </section>
     </main>

@@ -5,7 +5,7 @@ import List from "./List";
 export default function RouteLayout() {
   const {type , param2} = useParams();
 
-  if (!isNaN(Number(param2)) && isFinite(param2)){
+  if (type !== "person" && !isNaN(Number(param2)) && isFinite(param2)){
     return <Movie />
   } else {
     return <List/>

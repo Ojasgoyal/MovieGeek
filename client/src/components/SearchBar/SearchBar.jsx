@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchBar({ ishome = false }) {
   const [isFixed, setIsFixed] = useState(false);
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,6 +19,14 @@ export default function SearchBar({ ishome = false }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (query.trim()) {
+    const encoded = encodeURIComponent(query.trim()).replace(/%20/g, "+");
+      navigate(`/search?query=${encoded}`);
+    }
+  };
+
   return (
     <form
       id="search-form"
@@ -24,11 +35,13 @@ export default function SearchBar({ ishome = false }) {
           ? "fixed top-[48px] left-0 w-full md:top-[56px] md:w-full md:max-w-none"
           : "relative w-full max-w-4xl px-4 md:px-0"
       }`}
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={handleSubmit}
     >
       <input
         type="text"
         autoFocus
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
         placeholder="Search for a movie , tv show , person..."
         className={`w-full px-4 py-2 border border-white/40 focus:outline-none 
                    text-white backdrop-blur-sm  placeholder-white/80 
