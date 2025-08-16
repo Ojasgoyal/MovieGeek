@@ -7,14 +7,14 @@ export default function ToggleButtons({ active, onChange }) {
       <button
         type="button"
         onClick={() => onChange(false)}
-        className={`px-3 py-1 text-sm rounded-full transition-all ${!active ? "bg-black text-white" : "text-black"}`}
+        className={`px-2 py-0.5 text-xs rounded-full transition-all ${!active ? "bg-black text-white" : "text-black"}`}
       >
         Today
       </button>
       <button
         type="button"
         onClick={() => onChange(true)}
-        className={`px-3 py-1 text-sm rounded-full transition-all ${active ? "bg-black text-white" : "text-black"}`}
+        className={`px-2 py-0.5 text-xs rounded-full transition-all ${active ? "bg-black text-white" : "text-black"}`}
       >
         This Week
       </button>

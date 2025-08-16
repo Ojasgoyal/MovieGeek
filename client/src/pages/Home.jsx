@@ -106,7 +106,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-slate-50 flex flex-col">
       {/* Hero Section */}
-      <section className="relative flex flex-col justify-center w-full items-center h-[101vh] -mt-[56px]">
+      <section className="relative flex flex-col justify-center w-full items-center h-[100vh] -mt-[40px]">
         {/* Background image */}
         <div
           className="absolute inset-0 bg-cover bg-fixed bg-center"
@@ -119,9 +119,9 @@ export default function Home() {
       </section>
 
       {/* Trending Movies Section */}
-      <section className="py-12 px-4" id="trending-movies">
-        <h2 className="text-2xl font-bold mb-6 text-center">Trending Movies</h2>
-        <div className="relative mb-4 max-w-6xl pl-5 mx-auto">
+      <section className="py-10 px-4" id="trending-movies">
+        <h2 className="text-2xl font-bold mb-2 text-center">Trending Movies</h2>
+        <div className="relative mb-4 max-w-5xl md:pl-20 mx-auto">
           <ToggleButtons active={movieTime} onChange={toggleMovie} />
         </div>
         <div
@@ -135,9 +135,9 @@ export default function Home() {
           />
         </div>
       </section>
-      <section className="py-12 px-4" id="trending-shows">
+      <section className="py-10 px-4" id="trending-shows">
         <h2 className="text-2xl font-bold mb-4 text-center">Trending Shows</h2>
-        <div className="relative mb-4 max-w-6xl pl-5 mx-auto">
+        <div className="relative mb-4 max-w-5xl md:pl-20 mx-auto">
           <ToggleButtons active={tvTime} onChange={toggleTv} />
         </div>
         <div

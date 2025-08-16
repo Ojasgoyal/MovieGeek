@@ -3,7 +3,7 @@ import PersonCard from "../Cards/PersonCard";
 
 function ListSection({ itemData, type }) {
   return (
-    <div className="flex flex-wrap gap-2 justify-center max-w-6xl mx-auto px-2 md:gap-6">
+    <div className="flex flex-wrap gap-2 justify-center max-w-4xl mx-auto px-2 md:gap-2">
       {itemData &&
         Array.isArray(itemData) &&
         itemData

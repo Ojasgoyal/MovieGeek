@@ -77,11 +77,11 @@ export default function List() {
     <>
       <SearchBar/>
       <div className="flex flex-col mt-4 justify-center items-center py-8 px-4">
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight capitalize">
+        <h2 className="text-xl md:text-2xl font-bold tracking-tight capitalize">
           {sectionTitle} {typeName}
         </h2>
         <div
-          className={`mt-6 w-full max-w-7xl fade-container ${
+          className={`mt-6 w-full fade-container ${
             showList ? "visible" : ""
           }`}
         >

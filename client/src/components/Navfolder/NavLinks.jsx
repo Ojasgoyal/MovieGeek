@@ -4,7 +4,7 @@ export default function NavbarLinks() {
   return (
     <div className="hidden md:flex flex-1 items-center justify-center gap-6 order-2">
       <Dropdown
-        label="Movies"
+        label={<span className="text-sm">Movies</span>}
         items={[
           { to: "/movie/popular", label: "Popular" },
           { to: "/movie/now_playing", label: "Now Playing" },
@@ -14,7 +14,7 @@ export default function NavbarLinks() {
         scrolled
       />
       <Dropdown
-        label="TV Shows"
+        label={<span className="text-sm">Shows</span>}
         items={[
           { to: "/tv/popular", label: "Popular" },
           { to: "/tv/airing_today", label: "Airing Today" },
@@ -24,7 +24,7 @@ export default function NavbarLinks() {
         scrolled
       />
       <Dropdown
-        label="People"
+        label={<span className="text-sm">People</span>}
         items={[{ to: "/person/popular", label: "Popular People" }]}
         scrolled
       />

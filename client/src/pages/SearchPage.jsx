@@ -70,8 +70,8 @@ export default function SearchPage() {
   return (
     <>
       <SearchBar />
-      <div className="flex flex-col mt-4 justify-center items-center py-8 px-4">
-        <h2 className="mt-2 text-xl md:text-2xl tracking-tight capitalize">
+      <div className="flex flex-col mt-2 justify-center items-center py-8 px-4">
+        <h2 className="mt-2 text-lg md:text-xl tracking-tight capitalize">
           Search Results for:{" "}
           <span className="font-semibold">{query.replace(/\+/g, " ")}</span>
         </h2>
@@ -85,7 +85,7 @@ export default function SearchPage() {
                 setActiveTab(tab);
                 navigate(`/search/${tab}?query=${encodeURIComponent(query)}`);
               }}
-              className={`px-4 py-1 text-sm rounded-full transition-all w-20 ${
+              className={`px-2 py-1 text-xs rounded-full transition-all w-14 ${
                 activeTab === tab ? "bg-black text-white" : "text-black"
               }`}
             >
@@ -94,7 +94,7 @@ export default function SearchPage() {
           ))}
         </div>
 
-        <div className="mt-2 w-full max-w-7xl">
+        <div className="w-full">
           {loading ? (
             <div className="text-center text-lg">Loading...</div>
           ) : results[activeTab]?.length > 0 ? (
@@ -102,7 +102,7 @@ export default function SearchPage() {
               <ListSection itemData={results[activeTab]} type={activeTab} />
             </div>
           ) : (
-            <div className="text-center text-gray-400 mt-8">
+            <div className="text-center text-gray-400">
               No {activeTab} results found.
             </div>
           )}

@@ -41,7 +41,7 @@ function MovieCard({ movie, type }) {
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
-            className="w-[80px] h-[120px] sm:h-[200px] sm:w-[133.3px] object-cover"
+            className="w-[80px] h-[120px] sm:h-[240px] sm:w-[160px] object-cover rounded-md"
           />
         </Link>
         <div className="overlay absolute top-1.5 right-1.5 opacity-0 group-hover:opacity-100 transition-opacity">

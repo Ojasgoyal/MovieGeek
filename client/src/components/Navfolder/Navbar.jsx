@@ -37,7 +37,7 @@ export default function Navbar() {
         <div className="mx-auto max-w-7xl px-4">
           <nav
             aria-label="Primary"
-            className="flex items-center h-12 md:h-14 drop-shadow"
+            className="flex items-center h-10 md:h-10 drop-shadow"
           >
             {/* Mobile menu button */}
             <div className="flex md:hidden flex-1 items-center justify-start order-1">
@@ -55,7 +55,7 @@ export default function Navbar() {
               <Link
                 to="/"
                 aria-label="Go to home"
-                className="text-xl font-bold tracking-tight"
+                className="text-lg font-bold tracking-tight"
               >
                 MovieGeek 
               </Link>
@@ -75,17 +75,17 @@ export default function Navbar() {
               </button>
 
               {isOpen && (
-                <div className="absolute right-0 top-10 w-32 bg-white text-black rounded shadow-md z-50 px-2 py-2 text-center">
+                <div className="absolute right-0 top-10 w-24 bg-white text-black rounded shadow-md z-50 px-1 py-1 text-center">
                   <Link
                     to="/signup"
-                    className="block w-full px-3 py-2 rounded hover:bg-gray-100"
+                    className="block w-full px-2 py-1 rounded hover:bg-gray-100"
                     onClick={() => setIsOpen(false)}
                   >
                     Sign Up
                   </Link>
                   <Link
                     to="/login"
-                    className="block w-full px-3 py-2 rounded hover:bg-gray-100"
+                    className="block w-full px-2 py-1 rounded hover:bg-gray-100"
                     onClick={() => setIsOpen(false)}
                   >
                     Log In
@@ -96,10 +96,10 @@ export default function Navbar() {
 
             {/* Desktop account links */}
             <div className="hidden md:flex flex-1 items-center text-sm font-medium justify-end gap-3 order-3">
-              <Link to="/signup" className="px-3 py-2">
+              <Link to="/signup" className="px-2 py-1">
                 Sign Up
               </Link>
-              <Link to="/login" className="px-3 py-2">
+              <Link to="/login" className="px-2 py-1">
                 Log In
               </Link>
             </div>

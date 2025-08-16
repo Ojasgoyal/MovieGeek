@@ -275,7 +275,7 @@ export default function Movie() {
             </div>
           </div>
 
-          <style jsx>{`
+          <style >{`
             .overflow-y-auto::-webkit-scrollbar {
               width: 6px;
             }
