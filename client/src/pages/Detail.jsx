@@ -5,6 +5,7 @@ import HeroSection from "../components/Sections/HeroSection";
 import DetailsSection from "../components/Sections/DetailsSection";
 import CreditsSection from "../components/Sections/CreditsSection";
 import PersonDetails from "../components/Sections/PersonDetails";
+import SearchBar from "../components/SearchBar/SearchBar";
 
 export default function Detail() {
   const { type, param2: id } = useParams();
@@ -26,15 +27,18 @@ export default function Detail() {
 
   return (
     <>
+      <SearchBar />
       {type === "person" ? (
-        <PersonDetails
-          details={details}
-          movie_credits={movie_credits}
-          tv_credits={tv_credits}
-        />
+        <div className="mt-[37px] bg-gray-50 min-h-screen">
+          <PersonDetails
+            details={details}
+            movie_credits={movie_credits}
+            tv_credits={tv_credits}
+          />
+        </div>
       ) : (
         <>
-          <div className="min-h-screen bg-gray-50">
+          <div className="min-h-screen mt-[37px] bg-gray-50">
             <HeroSection
               details={details}
               trailer={trailer}
