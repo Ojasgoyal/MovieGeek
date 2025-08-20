@@ -3,11 +3,12 @@ import ListSection from "../components/Sections/ListSection";
 import { useEffect, useState } from "react";
 import ToggleButtons from "../components/ToggleButtons";
 import SearchBar from "../components/SearchBar/SearchBar";
+import { useAuth } from "../context/AuthContext";
 
 export default function Home() {
   const [movieTime, setMovieTime] = useState(false);
   const [tvTime, setTvTime] = useState(false);
-
+  const { user, login } = useAuth();
   const [randomPosterUrl, setRandomPosterUrl] = useState("");
 
   const [animating, setAnimating] = useState(false);
@@ -18,7 +19,7 @@ export default function Home() {
     setTimeout(() => {
       setMovieTime(isWeek);
       setAnimating(false);
-    }, 200); // match transition duration
+    }, 200);
   };
 
   const toggleTv = (isWeek) => {
@@ -55,29 +56,28 @@ export default function Home() {
   useEffect(() => {
     const fetchAllTrending = async () => {
       try {
-        const [movieDay, movieWeek, tvDay, tvWeek, popularMovies] =
-          await Promise.all([
-            getTrending("movie"),
-            getTrending("movie", "week"),
-            getTrending("tv"),
-            getTrending("tv", "week"),
-            axios
-              .get("http://localhost:5000/api/list/movie/now_playing")
-              .then((res) => res.data),
-          ]);
+        const [movieDay, movieWeek, tvDay, tvWeek] = await Promise.all([
+          getTrending("movie"),
+          getTrending("movie", "week"),
+          getTrending("tv"),
+          getTrending("tv", "week"),
+        ]);
 
         setMovieData({ movieDay, movieWeek, tvDay, tvWeek });
 
-        // Pick a random hero from popular movies
-        if (popularMovies?.length) {
-          const validMovies = popularMovies.filter((m) => m.backdrop_path);
-          if (validMovies.length) {
-            const randomMovie =
-              validMovies[Math.floor(Math.random() * validMovies.length)];
-            setRandomPosterUrl(
-              `https://image.tmdb.org/t/p/original${randomMovie.backdrop_path}`
-            );
-          }
+        const combinedResults = [
+          ...(movieDay?.results || []),
+          ...(tvDay?.results || []),
+        ];
+
+        const validItems = combinedResults.filter((item) => item.backdrop_path);
+
+        if (validItems.length) {
+          const randomItem =
+            validItems[Math.floor(Math.random() * validItems.length)];
+          setRandomPosterUrl(
+            `https://image.tmdb.org/t/p/original${randomItem.backdrop_path}`
+          );
         }
       } catch (err) {
         console.error("Error fetching all data:", err);
@@ -87,12 +87,31 @@ export default function Home() {
     fetchAllTrending();
   }, []);
 
+  useEffect(() => {
+    const refreshToken = async () => {
+      try {
+        const { data } = await axios.post(
+          "http://localhost:5000/api/refresh",
+          {},
+          { withCredentials: true }
+        );
+        login(data.accessToken); 
+      } catch (error) {
+        console.error("Failed to refresh token:", error);
+      }
+    };
+
+    if (user?.token) {
+      refreshToken(); 
+    }
+  }, [user, login]);
+
   const [isFixed, setIsFixed] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 500) {
-        // change 200 to whatever point you want
+      
         setIsFixed(true);
       } else {
         setIsFixed(false);
@@ -114,8 +133,8 @@ export default function Home() {
             backgroundImage: `url(${randomPosterUrl})`,
           }}
         ></div>
-        <div className="absolute inset-0 bg-black/30"></div>
-        <SearchBar ishome={true}/>
+        <div className="absolute inset-0 bg-black/25"></div>
+        <SearchBar ishome={true} />
       </section>
 
       {/* Trending Movies Section */}
@@ -131,7 +150,11 @@ export default function Home() {
         >
           <ListSection
             type={"movie"}
-            itemData={!movieTime ? movieData.movieDay?.results : movieData.movieWeek?.results}
+            itemData={
+              !movieTime
+                ? movieData.movieDay?.results
+                : movieData.movieWeek?.results
+            }
           />
         </div>
       </section>
@@ -145,7 +168,12 @@ export default function Home() {
             animatingTv ? "opacity-0" : "opacity-100 blur-0"
           }`}
         >
-          <ListSection type={"tv"} itemData={!tvTime ? movieData.tvDay?.results : movieData.tvWeek?.results} />
+          <ListSection
+            type={"tv"}
+            itemData={
+              !tvTime ? movieData.tvDay?.results : movieData.tvWeek?.results
+            }
+          />
         </div>
       </section>
     </main>
