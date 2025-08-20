@@ -1,21 +1,22 @@
-import { Link , useLocation} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Dropdown from "../Dropdown";
 import { FaRegUserCircle } from "react-icons/fa";
 import NavbarLinks from "./NavLinks";
 import MobileDrawer from "./MobileDrawer";
+import AccountLinks from "./AccountLinks";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false); // account menu
   const [drawerOpen, setDrawerOpen] = useState(false); // mobile sidebar
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  let ishome = true
+  let ishome = true;
 
-  if(location.pathname !== '/'){
-    ishome = false
+  if (location.pathname !== "/") {
+    ishome = false;
   } else {
-    ishome = true
+    ishome = true;
   }
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function Navbar() {
       <header
         role="banner"
         className={`sticky font-semibold top-0 z-40 w-full transition-colors duration-300 ${
-          (scrolled || !ishome)
+          scrolled || !ishome
             ? "bg-sky-600/70 text-white backdrop-blur shadow-md"
             : "bg-transparent text-white"
         }`}
@@ -57,7 +58,7 @@ export default function Navbar() {
                 aria-label="Go to home"
                 className="text-lg font-bold tracking-tight"
               >
-                MovieGeek 
+                MovieGeek
               </Link>
             </div>
 
@@ -75,34 +76,12 @@ export default function Navbar() {
               </button>
 
               {isOpen && (
-                <div className="absolute right-0 top-10 w-24 bg-white text-black rounded shadow-md z-50 px-1 py-1 text-center">
-                  <Link
-                    to="/signup"
-                    className="block w-full px-2 py-1 rounded hover:bg-gray-100"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Sign Up
-                  </Link>
-                  <Link
-                    to="/login"
-                    className="block w-full px-2 py-1 rounded hover:bg-gray-100"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Log In
-                  </Link>
-                </div>
+                <AccountLinks mobile onClose={() => setIsOpen(false)} />
               )}
             </div>
 
             {/* Desktop account links */}
-            <div className="hidden md:flex flex-1 items-center text-sm font-medium justify-end gap-3 order-3">
-              <Link to="/signup" className="px-2 py-1">
-                Sign Up
-              </Link>
-              <Link to="/login" className="px-2 py-1">
-                Log In
-              </Link>
-            </div>
+            <AccountLinks />
           </nav>
         </div>
       </header>
