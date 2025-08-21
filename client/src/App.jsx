@@ -9,18 +9,19 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { useAuth } from "./context/AuthContext";
 import { useMessage } from "./context/MessageContext";
+import Profile from "./pages/Profile";
 
 function App() {
   const { user } = useAuth();
   const { message, showMessage } = useMessage();
   const PrivateRoute = ({ children }) => {
     const { user } = useAuth();
-    return user ? children : <Navigate to="/login" replace />;
+    return user.accessToken ? children : <Navigate to="/login" replace />;
   };
 
   const PublicRoute = ({ children }) => {
     const { user } = useAuth();
-    return !user ? children : <Navigate to="/" replace />;
+    return !user.accessToken ? children : <Navigate to="/" replace />;
   };
   return (
     <>
@@ -52,7 +53,7 @@ function App() {
         <Route path="/search/:type" element={<SearchPage />} />
         <Route path="/:type/:param2" element={<RouteLayout />} />
         <Route path="/404" element={<NotFound />} />
-        <Route path="/*" element={<NotFound />} />
+        <Route path="/:username" element={<Profile />} />
       </Routes>
     </>
   );
