@@ -18,7 +18,7 @@ export default function Login() {
       const { data } = await axios.post(`${BASE_URL}/login`, formData, {
         withCredentials: true,
       });
-      login(data.accessToken);
+      login(data);
       setMessage("🎉 Logged In successfully!");
       navigate("/");
     } catch (error) {

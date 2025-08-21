@@ -12,8 +12,8 @@ const useAxios = () => {
   // Request interceptor: attach access token
   axiosInstance.interceptors.request.use(
     (config) => {
-      if (user?.token) {
-        config.headers["Authorization"] = `Bearer ${user.token}`;
+      if (user?.accessToken) {
+        config.headers["Authorization"] = `Bearer ${user.accessToken}`;
       }
       return config;
     },
@@ -36,8 +36,8 @@ const useAxios = () => {
             {},
             { withCredentials: true }
           );
-
-          login(data.accessToken);
+          const existingUser = JSON.parse(localStorage.getItem("user")) || {};
+          login({accessToken: data.accessToken , user: { username: existingUser.username }});
 
           originalRequest.headers["Authorization"] = `Bearer ${data.accessToken}`;
           return axiosInstance(originalRequest);

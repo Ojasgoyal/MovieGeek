@@ -30,10 +30,10 @@ export default function AccountLinks({ mobile = false, onClose }) {
   if (mobile) {
     return (
       <div className="absolute right-0 top-10 w-28 bg-white text-black rounded shadow-md z-50 px-1 py-1 text-center">
-        {user ? (
+        {user?.accessToken ? (
           <>
             <Link
-              to="/profile"
+              to={`/${user?.username}`}
               className="block w-full px-2 py-1 rounded hover:bg-gray-100"
               onClick={onClose}
             >
@@ -71,9 +71,9 @@ export default function AccountLinks({ mobile = false, onClose }) {
   // Desktop version
   return (
     <div className="hidden md:flex flex-1 items-center text-sm font-medium justify-end gap-3 order-3">
-      {user ? (
+      {user?.accessToken ? (
         <>
-          <Link to="/profile" className="px-2 py-1">
+          <Link to={`/${user?.username}`} className="px-2 py-1">
             Profile
           </Link>
           <button

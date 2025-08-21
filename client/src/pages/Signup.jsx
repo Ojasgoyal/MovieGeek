@@ -24,8 +24,7 @@ export default function Signup() {
       const { data } = await axios.post(`${BASE_URL}/register`, formData, {
         withCredentials: true,
       });
-      login(data.accessToken)
-
+      login(data)
       setMessage("🎉 Account created successfully!")
       navigate("/")
     } catch (error) {

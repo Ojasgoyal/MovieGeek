@@ -3,24 +3,38 @@ import { createContext, useContext, useState, useEffect } from "react";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    username: null,
+    accessToken: null,
+  });
 
-  // on mount, check if token exists
+  // ✅ on mount, check if user exists in localStorage
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      setUser({ token }); // you could decode jwt to get username/email
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      if (parsedUser.accessToken) {
+        setUser(parsedUser);
+      }
     }
   }, []);
 
-  const login = (token) => {
-    localStorage.setItem("accessToken", token);
-    setUser({ token });
+  // ✅ login
+  const login = (data) => {
+    const existingUser = JSON.parse(localStorage.getItem("user")) || {};
+    const userData = {
+      username: data?.user?.username || existingUser.username,
+      accessToken: data?.accessToken,
+    };
+
+    localStorage.setItem("user", JSON.stringify(userData));
+    setUser(userData);
   };
 
+  // ✅ logout
   const logout = () => {
-    localStorage.removeItem("accessToken");
-    setUser(null);
+    localStorage.removeItem("user");
+    setUser({ username: null, accessToken: null });
   };
 
   return (
