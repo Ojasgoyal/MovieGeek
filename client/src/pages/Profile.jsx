@@ -1,18 +1,19 @@
-import useAxios from "../hooks/useAxios";
+import axios from "axios";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useParams } from "react-router-dom";
 import ListSection from "../components/Sections/ListSection";
 import Bio from "../components/Profile/Bio";
+import SearchBar from "../components/SearchBar/SearchBar";
 
 export default function Profile() {
-  const axios = useAxios();
-  const BASE_URL = "http://localhost:5000/api";
   const { username } = useParams();
+  const BASE_URL = "http://localhost:5000/api";
   const { user: loggedInUser } = useAuth();
   const [profileData, setProfileData] = useState(null);
   const [stats, setStats] = useState(null);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [error, setError] = useState(null);
 
   const isSelf = loggedInUser?.username === username;
 
@@ -24,6 +25,7 @@ export default function Profile() {
         setStats(data.stats);
       } catch (err) {
         setError(err.response?.data?.message || "Error fetching profile");
+        console.log(err.response?.data?.message || "Error fetching profile");
       }
     };
     fetchProfile();
@@ -31,13 +33,18 @@ export default function Profile() {
 
   return (
     <>
-      <div className="w-full h-[97vh]">
-        <Bio
-          isSelf={isSelf}
-          data={profileData}
-          stats={stats}
-          onProfileUpdate={setProfileData}
-        />
+      <SearchBar />
+      <div className="w-full mt-[40px]">
+        {error ? (
+          <div className="text-center text-red-500">{error}</div>
+        ) : (
+          <Bio
+            isSelf={isSelf}
+            data={profileData}
+            stats={stats}
+            onProfileUpdate={setProfileData}
+          />
+        )}
       </div>
     </>
   );

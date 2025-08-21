@@ -87,25 +87,6 @@ export default function Home() {
     fetchAllTrending();
   }, []);
 
-  useEffect(() => {
-    const refreshToken = async () => {
-      try {
-        const { data } = await axios.post(
-          "http://localhost:5000/api/refresh",
-          {},
-          { withCredentials: true }
-        );
-        login(data.accessToken); 
-      } catch (error) {
-        console.error("Failed to refresh token:", error);
-      }
-    };
-
-    if (user?.token) {
-      refreshToken(); 
-    }
-  }, [user, login]);
-
   const [isFixed, setIsFixed] = useState(false);
 
   useEffect(() => {
