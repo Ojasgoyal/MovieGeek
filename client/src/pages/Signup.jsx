@@ -1,6 +1,5 @@
 import Form from "../components/Form";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { useMessage } from "../context/MessageContext";
@@ -8,7 +7,6 @@ import { useMessage } from "../context/MessageContext";
 export default function Signup() {
   const { setMessage } = useMessage();
   const { login } = useAuth();
-  const navigate = useNavigate();
   const BASE_URL = "http://localhost:5000/api";
 
   const [formData, setFormData] = useState({
@@ -26,7 +24,6 @@ export default function Signup() {
       });
       login(data)
       setMessage("🎉 Account created successfully!")
-      navigate("/")
     } catch (error) {
       console.error(`Could not Sign Up : ${error}`);
     }

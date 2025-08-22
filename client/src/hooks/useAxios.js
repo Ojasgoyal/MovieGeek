@@ -12,8 +12,9 @@ const useAxios = () => {
   // Request interceptor: attach access token
   axiosInstance.interceptors.request.use(
     (config) => {
-      if (user?.accessToken) {
-        config.headers["Authorization"] = `Bearer ${user.accessToken}`;
+      const stored = JSON.parse(localStorage.getItem("user") || "{}");
+      if (stored?.accessToken) {
+        config.headers["Authorization"] = `Bearer ${stored.accessToken}`;
       }
       return config;
     },

@@ -1,13 +1,11 @@
 import Form from "../components/Form";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { useMessage } from "../context/MessageContext";
 
 export default function Login() {
-  const { setMessage } = useMessage();
-  const navigate = useNavigate();
+  const { setMessage, setType } = useMessage();
   const { login } = useAuth();
   const BASE_URL = "http://localhost:5000/api";
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -20,11 +18,33 @@ export default function Login() {
       });
       login(data);
       setMessage("🎉 Logged In successfully!");
-      navigate("/");
     } catch (error) {
-      console.error(`Could not Log In : ${error}`);
+      // Ensure error.response exists and handle it properly
+      if (error.response) {
+        const status = error.response.status;
+        const errorMessage = error.response.data?.error || "An error occurred";
+
+        if (status === 401) {
+          setMessage("❌ Incorrect email or password. Please try again.");
+        } else if ((status === 404)) {
+          setMessage("❌ User with email does not exist");
+          setFormData({ email: "", password: "" });
+        } else {
+          setMessage(`❌ ${errorMessage}`);
+        }
+      } else {
+        // Handle network or unexpected errors
+        setMessage(
+          "❌ Unable to connect to the server. Please try again later."
+        );
+      }
+      setType("error");
+      console.error(`Could not Log In: ${error}`);
     }
   };
+
+
+  useEffect
 
   return (
     <Form title="Login" onSubmit={handleSubmit}>
