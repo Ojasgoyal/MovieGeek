@@ -11,22 +11,31 @@ import { useAuth } from "./context/AuthContext";
 import { useMessage } from "./context/MessageContext";
 import Profile from "./pages/Profile";
 
-function App() {
+const PrivateRoute = ({ children }) => {
   const { user } = useAuth();
-  const { message, showMessage } = useMessage();
-  const PrivateRoute = ({ children }) => {
-    const { user } = useAuth();
-    return user.accessToken ? children : <Navigate to="/login" replace />;
-  };
+  return user.accessToken ? children : <Navigate to="/login" replace />;
+};
 
-  const PublicRoute = ({ children }) => {
-    const { user } = useAuth();
-    return !user.accessToken ? children : <Navigate to="/" replace />;
-  };
+const PublicRoute = ({ children }) => {
+  const { user } = useAuth();
+  return !user.accessToken ? (
+    children
+  ) : (
+    <Navigate to={`/${user.username}`} replace />
+  );
+};
+
+function App() {
+  const { message, showMessage, type } = useMessage();
+
   return (
     <>
       {showMessage && (
-        <div className="w-full bg-green-600/80 text-white text-center font-semibold py-3 shadow-md">
+        <div
+          className={`fixed z-10 bottom-8 right-4 text-white text-center font-semibold py-2 px-4 rounded-md shadow-md animate-slide-in ${
+            type === "error" ? "bg-red-600/80" : "bg-green-600/80"
+          }`}
+        >
           {message}
         </div>
       )}
@@ -51,9 +60,9 @@ function App() {
         />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/search/:type" element={<SearchPage />} />
+        <Route path="/:username" element={<Profile />} />
         <Route path="/:type/:param2" element={<RouteLayout />} />
         <Route path="/404" element={<NotFound />} />
-        <Route path="/:username" element={<Profile />} />
       </Routes>
     </>
   );
