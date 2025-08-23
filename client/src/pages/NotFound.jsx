@@ -5,7 +5,7 @@ export default function NotFound() {
     "https://image.tmdb.org/t/p/w500/A9A82bca19hu39lXSAQiQ3qEPe6.jpg";
 
 return (
-    <div className="relative flex flex-col justify-center items-center w-full h-screen -mt-[56px]">
+    <div className="relative flex flex-col justify-center items-center w-full h-screen -mt-[42px]">
         <div
             className="absolute inset-0 bg-cover bg-center"
             style={{

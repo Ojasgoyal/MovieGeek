@@ -31,7 +31,7 @@ export default function Bio({
 
   useEffect(() => {
     const checkFollowingStatus = async () => {
-      if (!isSelf && profileData?.username) {
+      if (loggedInUser?.accessToken && !isSelf && profileData?.username) {
         setLoadingFollowStatus(true);
         try {
           const { data } = await axios.get(
@@ -152,7 +152,7 @@ export default function Bio({
         </div>
       </div>
 
-      {!isSelf && !loadingFollowStatus && (
+      {loggedInUser?.accessToken && !isSelf && !loadingFollowStatus && (
         <div className="mt-4">
           <button
             onClick={handleFollowToggle}

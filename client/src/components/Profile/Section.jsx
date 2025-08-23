@@ -2,7 +2,7 @@ import Card from "./Card";
 
 function Section({ itemData, type }) {
   return (
-    <div className="flex flex-wrap gap-2 justify-center max-w-4xl mx-auto px-2 py-6 md:gap-2">
+    <div className="flex flex-wrap gap-2 justify-center max-w-4xl mx-auto px-2 pt-6 md:gap-2">
       {itemData &&
         itemData.map((item) => {
           const movie = item.movie;

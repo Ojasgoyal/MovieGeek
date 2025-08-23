@@ -25,7 +25,7 @@ export default function Lists({ username }) {
         console.error(err);
       } finally {
         setLoading(false);
-        setShowContent(true);
+        setTimeout(() => setShowContent(true), 100);
       }
     };
     fetchListData();
@@ -66,7 +66,7 @@ export default function Lists({ username }) {
           {listData.length ? (
             <Section itemData={listData} type="movie" />
           ) : (
-            <div className="text-center text-gray-500">
+            <div className="py-6 text-center text-gray-500">
               Nothing in {activeList}
             </div>
           )}
