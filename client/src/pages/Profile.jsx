@@ -1,13 +1,16 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Bio from "../components/Profile/Bio";
 import SearchBar from "../components/SearchBar/SearchBar";
 import Lists from "../components/Profile/Lists";
+import { useMessage } from "../context/MessageContext";
 
 export default function Profile() {
   const { username } = useParams();
+  const navigate = useNavigate();
+  const { setMessage, setType } = useMessage();
   const BASE_URL = "http://localhost:5000/api";
   const { user: loggedInUser } = useAuth();
   const [profileData, setProfileData] = useState(null);
@@ -23,7 +26,9 @@ export default function Profile() {
       setStats(data.stats);
     } catch (err) {
       setError(err.response?.data?.message || "Error fetching profile");
-      console.log(err.response?.data?.message || "Error fetching profile");
+      setMessage("Error fetching profile: Username Doesn't Exist");
+      setType("error");
+      navigate("/404");
     }
   };
 

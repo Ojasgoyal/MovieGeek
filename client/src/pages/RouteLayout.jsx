@@ -4,8 +4,9 @@ import Detail from "./Detail";
 
 export default function RouteLayout() {
   const {type , param2} = useParams();
+  const validDetailTypes = ["movie","tv","person"]
 
-  if (!isNaN(Number(param2)) && isFinite(param2)){
+  if (validDetailTypes.includes(type) && !isNaN(Number(param2)) && isFinite(param2)){
     return <Detail key={`${type}-${param2}`}/>
   } else {
     return <List/>
