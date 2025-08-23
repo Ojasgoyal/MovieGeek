@@ -13,7 +13,7 @@ export default function Lists({ username }) {
   useEffect(() => {
     const fetchListData = async () => {
       setLoading(true);
-      setShowContent(false)
+      setShowContent(false);
       setError(null);
       try {
         const { data } = await axios.get(
@@ -25,41 +25,44 @@ export default function Lists({ username }) {
         console.error(err);
       } finally {
         setLoading(false);
-        setShowContent(true)
+        setShowContent(true);
       }
     };
     fetchListData();
   }, [activeList, username]);
 
+  if (loading) {
+    // Display nothing while loading
+    return null;
+  }
+
+  if (error) {
+    // Display error message if an error occurs
+    return <div className="text-center text-red-500">{error}</div>;
+  }
+
   return (
     <div className="w-full pt-2">
-      {loading ? (
-        <div className="text-center text-gray-500">Loading...</div>
-      ) : error ? (
-        <div className="text-center text-red-500">{error}</div>
-      ) : (
-        <>
-          {/* Centered Toggle Buttons */}
-          <div className="flex justify-center items-center bg-white border border-black rounded-full p-1 w-fit shadow-sm mx-auto">
-            {["watched", "watchlist", "favorites"].map((list) => (
-              <button
-                key={list}
-                onClick={() => setActiveList(list)}
-                className={`px-1 py-1 text-sm rounded-full transition-all w-24 ${
-                  activeList === list ? "bg-black text-white" : "text-black"
-                }`}
-              >
-                {list.charAt(0).toUpperCase() + list.slice(1)}
-              </button>
-            ))}
-          </div>
+      <>
+        {/* Centered Toggle Buttons */}
+        <div className="flex justify-center items-center bg-white border border-black rounded-full p-1 w-fit shadow-sm mx-auto">
+          {["watched", "watchlist", "favorites"].map((list) => (
+            <button
+              key={list}
+              onClick={() => setActiveList(list)}
+              className={`px-1 py-1 text-sm rounded-full transition-all w-24 ${
+                activeList === list ? "bg-black text-white" : "text-black"
+              }`}
+            >
+              {list.charAt(0).toUpperCase() + list.slice(1)}
+            </button>
+          ))}
+        </div>
 
-          {/* Section Content */}
-          <div
-            className={`w-full fade-container ${
-              showContent ? "visible" : ""
-            }`}
-          >
+        {/* Section Content */}
+        <div
+          className={`w-full fade-container ${showContent ? "visible" : ""}`}
+        >
           {listData.length ? (
             <Section itemData={listData} type="movie" />
           ) : (
@@ -67,9 +70,8 @@ export default function Lists({ username }) {
               Nothing in {activeList}
             </div>
           )}
-          </div>
-        </>
-      )}
+        </div>
+      </>
     </div>
   );
 }

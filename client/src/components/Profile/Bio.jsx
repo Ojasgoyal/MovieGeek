@@ -3,20 +3,71 @@ import useAxios from "../../hooks/useAxios";
 import { FaEdit, FaCheck, FaTimes } from "react-icons/fa";
 import Stats from "./Stats";
 import Avatar from "./Avatar";
+import { useAuth } from "../../context/AuthContext";
+import { useMessage } from "../../context/MessageContext";
 
-export default function Bio({ isSelf, data, stats, onProfileUpdate }) {
+export default function Bio({
+  isSelf,
+  profileData,
+  stats,
+  onProfileUpdate,
+  refreshStats,
+}) {
   const axios = useAxios();
-
+  const { user: loggedInUser } = useAuth();
+  const { setMessage, setType } = useMessage();
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [isfollowing, setIsFollowing] = useState(false);
+  const [loadingFollowStatus, setLoadingFollowStatus] = useState(true);
 
   useEffect(() => {
-    if (data) {
-      setName(data.name || "");
-      setBio(data.bio || "");
+    if (profileData) {
+      setName(profileData.name || "");
+      setBio(profileData.bio || "");
     }
-  }, [data]);
+  }, [profileData]);
+
+  useEffect(() => {
+    const checkFollowingStatus = async () => {
+      if (!isSelf && profileData?.username) {
+        setLoadingFollowStatus(true);
+        try {
+          const { data } = await axios.get(
+            `/user/${profileData.username}/followers`
+          );
+          const isFollowingUser = data.followers.some(
+            (follower) => follower.username === loggedInUser.username
+          );
+          setIsFollowing(isFollowingUser);
+        } catch (error) {
+          console.error("Error checking following status:", error);
+        } finally {
+          setLoadingFollowStatus(false); // End loading
+        }
+      }
+    };
+    checkFollowingStatus();
+  }, [profileData, isSelf, loggedInUser]);
+
+  const handleFollowToggle = async () => {
+    try {
+      const { data } = await axios.post(
+        `/user/${profileData.username}/togglefollow`
+      );
+      setIsFollowing((prev) => !prev);
+
+      if (refreshStats) refreshStats();
+
+      setMessage(data.message);
+      setType("success");
+    } catch (error) {
+      console.error("Error toggling follow:", error);
+      setMessage("Failed to toggle follow status.");
+      setType("error");
+    }
+  };
 
   // ---- Update Profile ----
   const handleProfileUpdate = async () => {
@@ -40,7 +91,7 @@ export default function Bio({ isSelf, data, stats, onProfileUpdate }) {
     if (onProfileUpdate) onProfileUpdate(updatedUser);
   };
 
-  if (!data || !stats) return null;
+  if (!profileData || !stats) return null;
 
   return (
     <div className="border md:max-w-5xl bg-white shadow-md rounded-sm p-6 mx-auto flex flex-col md:flex-row md:items-center gap-8 md:gap-10">
@@ -48,7 +99,7 @@ export default function Bio({ isSelf, data, stats, onProfileUpdate }) {
         <Avatar
           name={name}
           isSelf={isSelf}
-          avatarUrl={data.avatar?.url}
+          avatarUrl={profileData.avatar?.url}
           onAvatarUpdate={handleAvatarUpdate}
         />
 
@@ -86,7 +137,7 @@ export default function Bio({ isSelf, data, stats, onProfileUpdate }) {
           ) : (
             <>
               <h1 className="text-2xl font-medium text-black">{name}</h1>
-              <p className="text-gray-700">{data.username}</p>
+              <p className="text-gray-700">{profileData.username}</p>
               <p className="mt-3 text-black">{bio}</p>
               {isSelf && (
                 <button
@@ -101,7 +152,22 @@ export default function Bio({ isSelf, data, stats, onProfileUpdate }) {
         </div>
       </div>
 
-      <Stats username={data.username} stats={stats} />
+      {!isSelf && !loadingFollowStatus && (
+        <div className="mt-4">
+          <button
+            onClick={handleFollowToggle}
+            className={`px-2 py-1 rounded ${
+              isfollowing
+                ? "bg-gray-300 text-black hover:bg-gray-400"
+                : "bg-sky-500 text-white hover:bg-sky-600"
+            }`}
+          >
+            {isfollowing ? "Following" : "Follow"}
+          </button>
+        </div>
+      )}
+
+      <Stats username={profileData.username} stats={stats} />
     </div>
   );
 }

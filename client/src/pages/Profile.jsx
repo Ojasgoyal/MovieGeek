@@ -2,7 +2,6 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useParams } from "react-router-dom";
-import ListSection from "../components/Sections/ListSection";
 import Bio from "../components/Profile/Bio";
 import SearchBar from "../components/SearchBar/SearchBar";
 import Lists from "../components/Profile/Lists";
@@ -13,22 +12,31 @@ export default function Profile() {
   const { user: loggedInUser } = useAuth();
   const [profileData, setProfileData] = useState(null);
   const [stats, setStats] = useState(null);
-  const [isFollowing, setIsFollowing] = useState(false);
   const [error, setError] = useState(null);
 
   const isSelf = loggedInUser?.username === username;
 
+  const fetchProfile = async () => {
+    try {
+      const { data } = await axios.get(`${BASE_URL}/user/${username}`);
+      setProfileData(data.user);
+      setStats(data.stats);
+    } catch (err) {
+      setError(err.response?.data?.message || "Error fetching profile");
+      console.log(err.response?.data?.message || "Error fetching profile");
+    }
+  };
+
+  const fetchStats = async () => {
+    try {
+      const { data } = await axios.get(`${BASE_URL}/user/${username}`);
+      setStats(data.stats);
+    } catch (err) {
+      console.error("Failed to fetch stats:", err);
+    }
+  };
+
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const { data } = await axios.get(`${BASE_URL}/user/${username}`);
-        setProfileData(data.user);
-        setStats(data.stats);
-      } catch (err) {
-        setError(err.response?.data?.message || "Error fetching profile");
-        console.log(err.response?.data?.message || "Error fetching profile");
-      }
-    };
     fetchProfile();
   }, [username]);
 
@@ -41,13 +49,14 @@ export default function Profile() {
         ) : (
           <Bio
             isSelf={isSelf}
-            data={profileData}
+            profileData={profileData}
             stats={stats}
             onProfileUpdate={setProfileData}
+            refreshStats={fetchStats}
           />
         )}
         <Lists username={username} />
-        </div>
+      </div>
     </>
   );
 }
