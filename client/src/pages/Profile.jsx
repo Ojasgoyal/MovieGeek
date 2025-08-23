@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import ListSection from "../components/Sections/ListSection";
 import Bio from "../components/Profile/Bio";
 import SearchBar from "../components/SearchBar/SearchBar";
+import Lists from "../components/Profile/Lists";
 
 export default function Profile() {
   const { username } = useParams();
@@ -34,7 +35,7 @@ export default function Profile() {
   return (
     <>
       <SearchBar />
-      <div className="w-full mt-[40px]">
+      <div className="w-full mt-[38px]">
         {error ? (
           <div className="text-center text-red-500">{error}</div>
         ) : (
@@ -45,7 +46,8 @@ export default function Profile() {
             onProfileUpdate={setProfileData}
           />
         )}
-      </div>
+        <Lists username={username} />
+        </div>
     </>
   );
 }

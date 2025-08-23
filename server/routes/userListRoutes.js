@@ -4,6 +4,6 @@ import { verifyToken } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-router.get('/:username/list', verifyToken, getListItems);
+router.get('/:username/list', getListItems);
 
 export default router;
