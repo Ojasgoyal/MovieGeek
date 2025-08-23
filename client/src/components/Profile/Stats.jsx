@@ -1,18 +1,24 @@
-export default function Stats({ stats }) {
+import { Link } from "react-router-dom";
+
+export default function Stats({ username, stats }) {
   return (
     <>
       {/* Stats Section */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center gap-6 md:gap-8">
         {/* Follow Stats */}
         <div className="flex flex-row md:flex-col justify-around text-center md:pr-8 md:border-r md:border-gray-200">
-          <div className="px-3 py-2">
-            <p className="text-md text-sky-600">{stats.followersCount}</p>
-            <p className="text-xs text-gray-600">Followers</p>
-          </div>
-          <div className="px-3 py-2">
-            <p className="text-md text-sky-600">{stats.followingCount}</p>
-            <p className="text-xs text-gray-600">Following</p>
-          </div>
+          <Link to={`/${username}/followers`} className="group">
+            <div className="px-3 py-2">
+              <p className="text-md text-sky-600">{stats.followersCount}</p>
+              <p className="text-xs text-gray-600 group-hover:underline">Followers</p>
+            </div>
+          </Link>
+          <Link to={`/${username}/following`} className="group">
+            <div className="px-3 py-2">
+              <p className="text-md text-sky-600">{stats.followingCount}</p>
+              <p className="text-xs text-gray-600 group-hover:underline">Following</p>
+            </div>
+          </Link>
         </div>
 
         {/* Movie Stats */}

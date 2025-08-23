@@ -101,7 +101,7 @@ export default function Bio({ isSelf, data, stats, onProfileUpdate }) {
         </div>
       </div>
 
-      <Stats stats={stats} />
+      <Stats username={data.username} stats={stats} />
     </div>
   );
 }

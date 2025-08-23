@@ -10,9 +10,14 @@ import Login from "./pages/Login";
 import { useAuth } from "./context/AuthContext";
 import { useMessage } from "./context/MessageContext";
 import Profile from "./pages/Profile";
+import Follower from "./pages/Follower";
 
 const PrivateRoute = ({ children }) => {
-  const { user } = useAuth();
+  const { user,loading } = useAuth();
+
+  if (loading) {
+    return <div className="text-center mt-10">Loading...</div>;
+  }
   return user.accessToken ? children : <Navigate to="/login" replace />;
 };
 
@@ -26,6 +31,7 @@ const PublicRoute = ({ children }) => {
 };
 
 function App() {
+  const { user } = useAuth();
   const { message, showMessage, type } = useMessage();
 
   return (
@@ -61,6 +67,22 @@ function App() {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/search/:type" element={<SearchPage />} />
         <Route path="/:username" element={<Profile />} />
+        <Route
+          path="/:username/followers"
+          element={
+            <PrivateRoute>
+              <Follower />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/:username/following"
+          element={
+            <PrivateRoute>
+              <Follower />
+            </PrivateRoute>
+          }
+        />
         <Route path="/:type/:param2" element={<RouteLayout />} />
         <Route path="/404" element={<NotFound />} />
       </Routes>

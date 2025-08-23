@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
     username: null,
     accessToken: null,
   });
+  const [loading, setLoading] = useState(true);
 
   // ✅ on mount, check if user exists in localStorage
   useEffect(() => {
@@ -17,6 +18,7 @@ export const AuthProvider = ({ children }) => {
         setUser(parsedUser);
       }
     }
+    setLoading(false);
   }, []);
 
   // ✅ login
@@ -38,7 +40,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout , loading}}>
       {children}
     </AuthContext.Provider>
   );
