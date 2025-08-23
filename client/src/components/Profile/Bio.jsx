@@ -43,7 +43,7 @@ export default function Bio({ isSelf, data, stats, onProfileUpdate }) {
   if (!data || !stats) return null;
 
   return (
-    <div className="md:max-w-5xl bg-white shadow-md rounded-sm p-6 md:p-8 mx-auto flex flex-col md:flex-row md:items-center gap-8 md:gap-10">
+    <div className="border md:max-w-5xl bg-white shadow-md rounded-sm p-6 mx-auto flex flex-col md:flex-row md:items-center gap-8 md:gap-10">
       <div className="flex flex-row md:items-center gap-6 md:gap-10 w-full">
         <Avatar
           name={name}

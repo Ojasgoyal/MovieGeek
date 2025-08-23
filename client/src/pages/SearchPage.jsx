@@ -13,8 +13,14 @@ export default function SearchPage() {
   const BASE_SEARCH_URL = "http://localhost:5000/api";
 
   const [activeTab, setActiveTab] = useState(type || "movie");
-  const [results, setResults] = useState({ multi: [], movie: [], tv: [], person: [] });
+  const [results, setResults] = useState({
+    multi: [],
+    movie: [],
+    tv: [],
+    person: [],
+  });
   const [loading, setLoading] = useState(true);
+  const [showContent, setShowContent] = useState(false);
 
   // Helper: fetch multiple categories at once
   const fetchTypes = async (typesArray) => {
@@ -32,6 +38,7 @@ export default function SearchPage() {
     if (!query) return;
 
     setLoading(true);
+    setShowContent(false);
 
     const loadData = async () => {
       try {
@@ -41,7 +48,9 @@ export default function SearchPage() {
           setResults({ multi: [], ...data });
         } else {
           // Multi-search first
-          const multiRes = await axios.get(`${BASE_SEARCH_URL}/search?query=${query}`);
+          const multiRes = await axios.get(
+            `${BASE_SEARCH_URL}/search?query=${query}`
+          );
           const multiData = multiRes.data || [];
           setResults((prev) => ({ ...prev, multi: multiData }));
 
@@ -57,14 +66,19 @@ export default function SearchPage() {
         console.error("Search error:", err);
       } finally {
         setLoading(false);
+        setShowContent(true);
       }
     };
 
     loadData();
-  }, [query, type]);
+  }, [query, type, activeTab]);
 
   if (!query) {
-    return <div className="text-center mt-10 text-white">No search query provided.</div>;
+    return (
+      <div className="text-center mt-10 text-white">
+        No search query provided.
+      </div>
+    );
   }
 
   return (
@@ -94,7 +108,7 @@ export default function SearchPage() {
           ))}
         </div>
 
-        <div className="w-full">
+        <div className={`mt-6 w-full fade-container ${showContent ? "visible" : ""}`}>
           {loading ? (
             <div className="text-center text-lg">Loading...</div>
           ) : results[activeTab]?.length > 0 ? (
