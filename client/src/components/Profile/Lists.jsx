@@ -8,12 +8,10 @@ export default function Lists({ username }) {
   const [listData, setListData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
     const fetchListData = async () => {
       setLoading(true);
-      setShowContent(false);
       setError(null);
       try {
         const { data } = await axios.get(
@@ -25,21 +23,10 @@ export default function Lists({ username }) {
         console.error(err);
       } finally {
         setLoading(false);
-        setTimeout(() => setShowContent(true), 100);
       }
     };
     fetchListData();
   }, [activeList, username]);
-
-  if (loading) {
-    // Display nothing while loading
-    return null;
-  }
-
-  if (error) {
-    // Display error message if an error occurs
-    return <div className="text-center text-red-500">{error}</div>;
-  }
 
   return (
     <div className="w-full pt-2">
@@ -61,10 +48,14 @@ export default function Lists({ username }) {
 
         {/* Section Content */}
         <div
-          className={`w-full fade-container ${showContent ? "visible" : ""}`}
+          className={`w-full fade-container ${!loading ? "visible" : ""}`}
         >
-          {listData.length ? (
-            <Section itemData={listData} type="movie" />
+          {loading ? (
+            <div className="py-6 text-center text-gray-500">Loading...</div>
+          ) : error ? (
+            <div className="py-6 text-center text-gray-500">Loading...</div>
+          ) : listData.length ? (
+            <Section itemData={listData} />
           ) : (
             <div className="py-6 text-center text-gray-500">
               Nothing in {activeList}

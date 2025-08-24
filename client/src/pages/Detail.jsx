@@ -7,6 +7,7 @@ import CreditsSection from "../components/Sections/CreditsSection";
 import PersonDetails from "../components/Sections/PersonDetails";
 import SearchBar from "../components/SearchBar/SearchBar";
 
+
 export default function Detail() {
   const { type, param2: id } = useParams();
   const { data, loading, error } = getData(type, id);

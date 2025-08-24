@@ -1,4 +1,44 @@
+import { useEffect, useState } from "react";
+import ListButtons from "../ListButtons";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+
 export default function DetailsSection({ details }) {
+  const { type, param2: id } = useParams();
+  const { user } = useAuth();
+  const [listState, setListState] = useState({
+    watchlist: false,
+    watched: false,
+    favorites: false,
+  });
+
+  useEffect(() => {
+    const fetchListState = async () => {
+      try {
+        const statuses = ["watchlist", "watched", "favorites"];
+        const state = { watchlist: false, watched: false, favorites: false };
+
+        await Promise.all(
+          statuses.map(async (status) => {
+            const { data } = await axios.get(
+              `http://localhost:5000/api/user/${user.username}/list?status=${status}&type=${type}`
+            );
+            if (data.some((item) => Number(item.tmdbId) === Number(id))) {
+              state[status] = true;
+            }
+          })
+        );
+
+        setListState(state);
+      } catch (error) {
+        console.error("Failed to fetch list state:", error);
+      }
+    };
+
+    fetchListState();
+  }, [id, user.username]);
+
   const formatRuntime = (minutes) => {
     if (!minutes) return "";
     const hours = Math.floor(minutes / 60);
@@ -19,14 +59,22 @@ export default function DetailsSection({ details }) {
     <div className="lg:col-span-2">
       <div className="flex flex-col md:flex-row gap-6">
         {/* Poster */}
-        <div className="flex-shrink-0 mx-auto md:mx-0">
-          {details.poster_path && (
-            <img
-              src={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
-              alt={details.title || details.name}
-              className="w-[150px] md:w-[240px] rounded-sm shadow-lg hover:shadow-xl transition-shadow duration-300"
-            />
-          )}
+        <div className="flex flex-col items-center">
+          <div className="flex-shrink-0 mx-auto md:mx-0">
+            {details.poster_path && (
+              <img
+                src={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
+                alt={details.title || details.name}
+                className="w-[150px] md:w-[240px] rounded-sm shadow-lg hover:shadow-xl transition-shadow duration-300"
+              />
+            )}
+          </div>
+          <ListButtons
+            onProfile={true}
+            type={type}
+            id={id}
+            initialState={listState}
+          />
         </div>
 
         {/* Details */}
