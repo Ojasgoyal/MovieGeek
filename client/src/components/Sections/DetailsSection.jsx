@@ -69,12 +69,14 @@ export default function DetailsSection({ details }) {
               />
             )}
           </div>
+          {user?.username && 
           <ListButtons
             onProfile={true}
             type={type}
             id={id}
             initialState={listState}
           />
+          } 
         </div>
 
         {/* Details */}

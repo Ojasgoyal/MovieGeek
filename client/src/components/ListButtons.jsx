@@ -9,6 +9,17 @@ import {
 import { useState, useEffect } from "react";
 
 function ListButtons({ onProfile = false, type, id, initialState = {} }) {
+  const [listState, setListState] = useState(initialState);
+
+  useEffect(() => {
+    if (
+      initialState.watchlist !== listState.watchlist ||
+      initialState.watched !== listState.watched ||
+      initialState.favorites !== listState.favorites
+    ) {
+      setListState(initialState);
+    }
+  }, [initialState]);
 
   const profileClass = onProfile
     ? "flex justify-around items-center bg-white shadow-md rounded-md p-1 md:w-full"
@@ -25,7 +36,7 @@ function ListButtons({ onProfile = false, type, id, initialState = {} }) {
           className={`${buttonClass}`}
           onClick={() => setIsWatched((prev) => !prev)}
         >
-          {initialState.watched ? (
+          {listState?.watched ? (
             <FaEye className="text-sky-600" />
           ) : (
             <FaRegEye className="text-sky-500" />
@@ -35,7 +46,7 @@ function ListButtons({ onProfile = false, type, id, initialState = {} }) {
           className={`${buttonClass}`}
           onClick={() => setIsWatchlisted((prev) => !prev)}
         >
-          {initialState.watchlist ? (
+          {listState?.watchlist ? (
             <FaBookmark className="text-slate-600" />
           ) : (
             <FaRegBookmark className="text-slate-600" />
@@ -45,7 +56,7 @@ function ListButtons({ onProfile = false, type, id, initialState = {} }) {
           className={`${buttonClass}`}
           onClick={() => setIsFavorite((prev) => !prev)}
         >
-          {initialState.favorites ? (
+          {listState?.favorites ? (
             <FaHeart className="text-rose-500" />
           ) : (
             <FaRegHeart className="text-rose-500" />

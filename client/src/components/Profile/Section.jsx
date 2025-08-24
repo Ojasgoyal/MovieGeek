@@ -1,4 +1,4 @@
-import Card from "./Card";
+import MovieCard from "../Cards/MovieCard";
 
 function Section({ itemData }) {
   return (
@@ -7,7 +7,7 @@ function Section({ itemData }) {
         itemData.map((item) => {
           const movie = item.movie;
           if (!movie) return null;
-          return <Card type={movie.type} key={movie._id} movie={movie} />;
+          return <MovieCard type={movie.type} key={movie._id} movie={movie} />;
         })}
     </div>
   );
