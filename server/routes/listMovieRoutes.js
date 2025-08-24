@@ -1,5 +1,5 @@
 import express from 'express';
-import { addToList, removeFromList } from '../controllers/savedlistControllers.js';
+import { addToList, removeFromList } from '../controllers/savedListControllers.js';
 import { verifyToken } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();

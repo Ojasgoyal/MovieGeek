@@ -12,6 +12,11 @@ const listSchema = new mongoose.Schema({
     required: true,
     index: true,
   },
+  type: {
+    type: String,
+    enum: ["movie", "tv"],
+    required: true,
+  },
   status: {
     type: String,
     enum: ["watchlist", "watched", "favorites"],
@@ -24,6 +29,6 @@ const listSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-listSchema.index({ user: 1, tmdbId: 1 }, { unique: true });
+listSchema.index({ user: 1, tmdbId: 1, type: 1, status: 1 }, { unique: true });
 
 export default mongoose.model("List", listSchema);
