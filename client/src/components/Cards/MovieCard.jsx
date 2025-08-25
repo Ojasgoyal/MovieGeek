@@ -100,7 +100,7 @@ function MovieCard({ movie, type }) {
           />
         </Link>
         {user?.username && (
-          <ListButtons type={type} id={movie.id} initialState={listState} />
+          <ListButtons type={type} id={movie.id || movie._id} initialState={listState} />
         )}
       </div>
     </div>

@@ -7,9 +7,11 @@ import {
   FaHeart,
 } from "react-icons/fa";
 import { useState, useEffect } from "react";
+import useAxios from "../hooks/useAxios";
 
 function ListButtons({ onProfile = false, type, id, initialState = {} }) {
   const [listState, setListState] = useState(initialState);
+  const axios = useAxios();
 
   useEffect(() => {
     if (
@@ -20,6 +22,31 @@ function ListButtons({ onProfile = false, type, id, initialState = {} }) {
       setListState(initialState);
     }
   }, [initialState]);
+
+  const handleToggle = async (status) => {
+    const isInList = listState[status];
+    try {
+      if (isInList) {
+        await axios.delete(`detail/${type}/${id}/remove`, {
+          data: { status },
+        });
+      } else {
+        await axios.post(`detail/${type}/${id}/add`, {
+          status,
+        });
+      }
+
+      setListState((prev) => ({
+        ...prev,
+        [status]: !isInList,
+      }));
+    } catch (error) {
+      console.error(
+        `Failed to ${isInList ? "remove from" : "add to"} ${status}:`,
+        error
+      );
+    }
+  };
 
   const profileClass = onProfile
     ? "flex justify-around items-center bg-white shadow-md rounded-md p-1 md:w-full"
@@ -34,7 +61,7 @@ function ListButtons({ onProfile = false, type, id, initialState = {} }) {
       <div className={`${profileClass}`}>
         <button
           className={`${buttonClass}`}
-          onClick={() => setIsWatched((prev) => !prev)}
+          onClick={() => handleToggle("watched")}
         >
           {listState?.watched ? (
             <FaEye className="text-sky-600" />
@@ -44,7 +71,7 @@ function ListButtons({ onProfile = false, type, id, initialState = {} }) {
         </button>
         <button
           className={`${buttonClass}`}
-          onClick={() => setIsWatchlisted((prev) => !prev)}
+          onClick={() => handleToggle("watchlist")}
         >
           {listState?.watchlist ? (
             <FaBookmark className="text-slate-600" />
@@ -54,7 +81,7 @@ function ListButtons({ onProfile = false, type, id, initialState = {} }) {
         </button>
         <button
           className={`${buttonClass}`}
-          onClick={() => setIsFavorite((prev) => !prev)}
+          onClick={() => handleToggle("favorites")}
         >
           {listState?.favorites ? (
             <FaHeart className="text-rose-500" />
