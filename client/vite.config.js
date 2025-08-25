@@ -7,5 +7,6 @@ export default defineConfig({
   server: {
     port: 5173,
     strictPort: true
-  }
+  },
+  base: '/' // Ensure correct base path for production builds
 })

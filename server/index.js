@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
 import cors from 'cors';
+import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import mongoose from 'mongoose';
 import logger from './utils/logger.js';
@@ -31,6 +32,7 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+app.use(helmet());
 
 const morganFormat = ":method :url :status :response-time ms";
 
