@@ -53,8 +53,8 @@ function MovieCard({ onProfile=false ,movie, type }) {
     if (!user?.accessToken) return;
 
     const handleMouseMove = (e) => {
+      if (!cardRef.current) return;
       if (hasFetched || fetching) return; // Skip if already fetched
-
       const cardRect = cardRef.current.getBoundingClientRect(); // Get the card's bounding box
       const cursorX = e.clientX; // Cursor X position
       const cursorY = e.clientY; // Cursor Y position

@@ -78,7 +78,7 @@ export default function PersonDetails({ details, movie_credits, tv_credits }) {
             {movie_credits.cast.map((movie) => (
               <Link
                 to={`/movie/${movie.id}`}
-                key={movie.id}
+                key={movie.credit_id}
                 className="flex-shrink-0 w-36 p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
               >
                 {movie.poster_path ? (
@@ -114,7 +114,7 @@ export default function PersonDetails({ details, movie_credits, tv_credits }) {
             {tv_credits.cast.map((tv) => (
               <Link
                 to={`/tv/${tv.id}`}
-                key={tv.id}
+                key={tv.credit_id}
                 className="flex-shrink-0 w-36 p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
               >
                 {tv.poster_path ? (

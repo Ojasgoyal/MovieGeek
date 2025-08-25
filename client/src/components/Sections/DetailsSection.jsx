@@ -14,6 +14,7 @@ export default function DetailsSection({ details }) {
   });
 
   useEffect(() => {
+    if(!user.username) return;
     const fetchListState = async () => {
       try {
         const statuses = ["watchlist", "watched", "favorites"];
