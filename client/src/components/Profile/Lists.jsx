@@ -5,6 +5,7 @@ import Section from "./Section";
 export default function Lists({ username }) {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [activeList, setActiveList] = useState("watched");
+  const [activeType, setActiveType] = useState("movie"); // New state for type toggle
   const [listData, setListData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -15,7 +16,7 @@ export default function Lists({ username }) {
       setError(null);
       try {
         const { data } = await axios.get(
-          `${BASE_URL}/user/${username}/list?status=${activeList}`
+          `${BASE_URL}/user/${username}/list?status=${activeList}&type=${activeType}`
         );
         setListData(data);
       } catch (err) {
@@ -26,7 +27,7 @@ export default function Lists({ username }) {
       }
     };
     fetchListData();
-  }, [activeList, username]);
+  }, [activeList, activeType, username]);
 
   return (
     <div className="w-full pt-2">
@@ -45,6 +46,21 @@ export default function Lists({ username }) {
             </button>
           ))}
         </div>
+        {/* Type Toggle Buttons */}
+        <div className="flex justify-center items-center bg-white border border-black rounded-full p-1 w-fit shadow-sm mx-auto mt-1">
+          {["movie", "tv"].map((type) => (
+            <button
+              key={type}
+              onClick={() => setActiveType(type)}
+              className={`px-1 py-1 text-xs rounded-full transition-all w-24 ${
+                activeType === type ? "bg-black text-white" : "text-black"
+              }`}
+            >
+              {type === "movie" ? "Movie": "Shows"}
+            </button>
+          ))}
+        </div>
+
 
         {/* Section Content */}
         <div
@@ -53,12 +69,12 @@ export default function Lists({ username }) {
           {loading ? (
             <div className="py-6 text-center text-gray-500">Loading...</div>
           ) : error ? (
-            <div className="py-6 text-center text-gray-500">Loading...</div>
+            <div className="py-6 text-center text-gray-500">{error}</div>
           ) : listData.length ? (
             <Section itemData={listData} />
           ) : (
             <div className="py-6 text-center text-gray-500">
-              Nothing in {activeList}
+              Nothing in {activeList} ({activeType})
             </div>
           )}
         </div>
