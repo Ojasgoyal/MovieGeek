@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 export default function DetailsSection({ details }) {
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const { type, param2: id } = useParams();
   const { user } = useAuth();
   const [listState, setListState] = useState({
@@ -14,7 +15,7 @@ export default function DetailsSection({ details }) {
   });
 
   useEffect(() => {
-    if(!user.username) return;
+    if (!user.username) return;
     const fetchListState = async () => {
       try {
         const statuses = ["watchlist", "watched", "favorites"];
@@ -23,7 +24,7 @@ export default function DetailsSection({ details }) {
         await Promise.all(
           statuses.map(async (status) => {
             const { data } = await axios.get(
-              `http://localhost:5000/api/user/${user.username}/list?status=${status}&type=${type}`
+              `${BASE_URL}/user/${user.username}/list?status=${status}&type=${type}`
             );
             if (data.some((item) => Number(item.tmdbId) === Number(id))) {
               state[status] = true;
@@ -70,14 +71,14 @@ export default function DetailsSection({ details }) {
               />
             )}
           </div>
-          {user?.username && 
-          <ListButtons
-            onDetails={true}
-            type={type}
-            id={id}
-            initialState={listState}
-          />
-          } 
+          {user?.username && (
+            <ListButtons
+              onDetails={true}
+              type={type}
+              id={id}
+              initialState={listState}
+            />
+          )}
         </div>
 
         {/* Details */}

@@ -6,7 +6,7 @@ import { useMessage } from "../../context/MessageContext";
 
 export default function AccountLinks({ mobile = false, onClose }) {
   const { setMessage } = useMessage();
-  const BASE_URL = "http://localhost:5000/api";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);

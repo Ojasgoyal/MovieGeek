@@ -7,7 +7,7 @@ import { useMessage } from "../context/MessageContext";
 export default function Login() {
   const { setMessage, setType } = useMessage();
   const { login } = useAuth();
-  const BASE_URL = "http://localhost:5000/api";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const handleSubmit = async (e) => {

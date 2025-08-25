@@ -7,7 +7,7 @@ import { useMessage } from "../context/MessageContext";
 export default function Signup() {
   const { setMessage } = useMessage();
   const { login } = useAuth();
-  const BASE_URL = "http://localhost:5000/api";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [formData, setFormData] = useState({
     name: "",

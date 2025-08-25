@@ -6,9 +6,9 @@ import SearchBar from "../components/SearchBar/SearchBar";
 import { useAuth } from "../context/AuthContext";
 
 export default function Home() {
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [movieTime, setMovieTime] = useState(false);
   const [tvTime, setTvTime] = useState(false);
-  const { user, login } = useAuth();
   const [randomPosterUrl, setRandomPosterUrl] = useState("");
 
   const [animating, setAnimating] = useState(false);
@@ -34,9 +34,9 @@ export default function Home() {
     try {
       let url = "";
       if (time.trim() === "week") {
-        url = `http://localhost:5000/api/trending/${type}/${time}`;
+        url = `${BASE_URL}/trending/${type}/${time}`;
       } else {
-        url = `http://localhost:5000/api/trending/${type}`;
+        url = `${BASE_URL}/trending/${type}`;
       }
 
       const { data } = await axios.get(url);

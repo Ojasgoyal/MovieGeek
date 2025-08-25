@@ -5,6 +5,7 @@ import axios from "axios";
 import SearchBar from "../components/SearchBar/SearchBar";
 
 export default function List() {
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const { type, param2:list } = useParams();
   const [data, setData] = useState([]);
   const [showList, setShowList] = useState(false);
@@ -29,7 +30,7 @@ export default function List() {
 
   async function getListData() {
     try {
-      const { data } = await axios(`http://localhost:5000/api/list/${path}`);
+      const { data } = await axios(`${BASE_URL}/list/${path}`);
       return data;
     } catch (error) {
       console.error("Error fetching movie data:", error);

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Section from "./Section";
 
 export default function Lists({ username }) {
-  const BASE_URL = "http://localhost:5000/api";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [activeList, setActiveList] = useState("watched");
   const [listData, setListData] = useState([]);
   const [loading, setLoading] = useState(false);

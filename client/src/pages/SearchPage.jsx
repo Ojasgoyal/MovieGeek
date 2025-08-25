@@ -10,7 +10,7 @@ export default function SearchPage() {
   const { type } = useParams();
 
   const query = searchParams.get("query") || "";
-  const BASE_SEARCH_URL = "http://localhost:5000/api";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [activeTab, setActiveTab] = useState(type || "movie");
   const [results, setResults] = useState({
@@ -25,7 +25,7 @@ export default function SearchPage() {
   // Helper: fetch multiple categories at once
   const fetchTypes = async (typesArray) => {
     const requests = typesArray.map((t) =>
-      axios.get(`${BASE_SEARCH_URL}/search/${t}?query=${query}`)
+      axios.get(`${BASE_URL}/search/${t}?query=${query}`)
     );
     const responses = await Promise.all(requests);
     return typesArray.reduce((acc, t, i) => {
@@ -49,7 +49,7 @@ export default function SearchPage() {
         } else {
           // Multi-search first
           const multiRes = await axios.get(
-            `${BASE_SEARCH_URL}/search?query=${query}`
+            `${BASE_URL}/search?query=${query}`
           );
           const multiData = multiRes.data || [];
           setResults((prev) => ({ ...prev, multi: multiData }));

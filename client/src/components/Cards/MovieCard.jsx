@@ -4,7 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 
-function MovieCard({ onProfile=false ,movie, type }) {
+function MovieCard({ onProfile = false, movie, type }) {
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const { user } = useAuth();
   const [listState, setListState] = useState({
     watchlist: false,
@@ -28,7 +29,7 @@ function MovieCard({ onProfile=false ,movie, type }) {
       await Promise.all(
         statuses.map(async (status) => {
           const { data } = await axios.get(
-            `http://localhost:5000/api/user/${user.username}/list?status=${status}&type=${type}`
+            `${BASE_URL}/user/${user.username}/list?status=${status}&type=${type}`
           );
           if (
             data.some(
@@ -84,11 +85,11 @@ function MovieCard({ onProfile=false ,movie, type }) {
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [user, hasFetched , fetching]);
+  }, [user, hasFetched, fetching]);
 
-
-  const sizeClass = onProfile ? "sm:h-[150px] sm:w-[100px]" : "sm:h-[200px] sm:w-[133px]"
-
+  const sizeClass = onProfile
+    ? "sm:h-[150px] sm:w-[100px]"
+    : "sm:h-[200px] sm:w-[133px]";
 
   return (
     <div ref={cardRef} className="movie-card relative group ">
@@ -104,7 +105,12 @@ function MovieCard({ onProfile=false ,movie, type }) {
           />
         </Link>
         {user?.username && (
-          <ListButtons onProfile={onProfile} type={type} id={movie.id || movie._id} initialState={listState} />
+          <ListButtons
+            onProfile={onProfile}
+            type={type}
+            id={movie.id || movie._id}
+            initialState={listState}
+          />
         )}
       </div>
     </div>

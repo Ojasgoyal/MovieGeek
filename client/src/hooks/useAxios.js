@@ -3,9 +3,9 @@ import { useAuth } from "../context/AuthContext";
 
 const useAxios = () => {
   const { user, login, logout } = useAuth();
-
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000/api",
+    baseURL: BASE_URL,
     withCredentials: true, // send refresh token cookie
   });
 
@@ -33,7 +33,7 @@ const useAxios = () => {
         try {
           // Refresh access token
           const { data } = await axios.post(
-            "http://localhost:5000/api/refresh",
+            `${BASE_URL}/refresh`,
             {},
             { withCredentials: true }
           );

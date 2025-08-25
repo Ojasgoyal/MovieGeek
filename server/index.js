@@ -20,11 +20,12 @@ import listMovieRoutes from "./routes/listMovieRoutes.js"
 
 const PORT = process.env.PORT || 5000
 const MONGO_URI = process.env.MONGO_URI
+const FRONTEND_URL = process.env.FRONTEND_URL
 
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: FRONTEND_URL,
     credentials: true, 
   })
 );

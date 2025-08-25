@@ -12,7 +12,7 @@ export default function Profile() {
   const { username } = useParams();
   const navigate = useNavigate();
   const { setMessage, setType } = useMessage();
-  const BASE_URL = "http://localhost:5000/api";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const { user: loggedInUser } = useAuth();
   const [profileData, setProfileData] = useState(null);
   const [stats, setStats] = useState(null);
