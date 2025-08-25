@@ -11,7 +11,7 @@ function PersonCard({person}) {
           <img
             src={`https://image.tmdb.org/t/p/w500${person.profile_path}`}
             alt={person.name}
-            className="w-[80px] h-[120px] sm:w-[160px] sm:h-[240px] object-cover rounded-md"
+            className="w-[70px] h-[105px] aspect[2/3] sm:w-[133px] sm:h-[200px] object-cover rounded-md"
           />
         </Link>
       </div>

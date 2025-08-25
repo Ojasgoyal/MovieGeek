@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 
-function MovieCard({ movie, type }) {
+function MovieCard({ onProfile=false ,movie, type }) {
   const { user } = useAuth();
   const [listState, setListState] = useState({
     watchlist: false,
@@ -73,7 +73,7 @@ function MovieCard({ movie, type }) {
       const distance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
 
       // Trigger the API call if the cursor is within 100px of the card
-      if (distance < 50) {
+      if (distance < 100) {
         fetchListState();
         document.removeEventListener("mousemove", handleMouseMove);
       }
@@ -86,6 +86,10 @@ function MovieCard({ movie, type }) {
     };
   }, [user, hasFetched , fetching]);
 
+
+  const sizeClass = onProfile ? "sm:h-[150px] sm:w-[100px]" : "sm:h-[200px] sm:w-[133px]"
+
+
   return (
     <div ref={cardRef} className="movie-card relative group ">
       <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity z-5 pointer-events-none"></div>
@@ -96,11 +100,11 @@ function MovieCard({ movie, type }) {
               movie.poster_path || movie.posterUrl
             }`}
             alt={movie.title}
-            className="w-[80px] h-[120px] sm:h-[240px] sm:w-[160px] object-cover rounded-md"
+            className={`"w-[70px] h-[105px] aspect-[2/3] ${sizeClass} object-cover rounded-md`}
           />
         </Link>
         {user?.username && (
-          <ListButtons type={type} id={movie.id || movie._id} initialState={listState} />
+          <ListButtons onProfile={onProfile} type={type} id={movie.id || movie._id} initialState={listState} />
         )}
       </div>
     </div>

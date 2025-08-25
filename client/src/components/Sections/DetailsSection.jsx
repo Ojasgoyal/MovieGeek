@@ -71,7 +71,7 @@ export default function DetailsSection({ details }) {
           </div>
           {user?.username && 
           <ListButtons
-            onProfile={true}
+            onDetails={true}
             type={type}
             id={id}
             initialState={listState}

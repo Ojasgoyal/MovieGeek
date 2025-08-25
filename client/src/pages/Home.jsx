@@ -121,7 +121,7 @@ export default function Home() {
       {/* Trending Movies Section */}
       <section className="py-10 px-4" id="trending-movies">
         <h2 className="text-2xl font-bold mb-2 text-center">Trending Movies</h2>
-        <div className="relative mb-4 max-w-5xl md:pl-20 mx-auto">
+        <div className="relative mb-4 max-w-5xl mx-auto">
           <ToggleButtons active={movieTime} onChange={toggleMovie} />
         </div>
         <div
@@ -141,7 +141,7 @@ export default function Home() {
       </section>
       <section className="py-10 px-4" id="trending-shows">
         <h2 className="text-2xl font-bold mb-4 text-center">Trending Shows</h2>
-        <div className="relative mb-4 max-w-5xl md:pl-20 mx-auto">
+        <div className="relative mb-4 max-w-5xl mx-auto">
           <ToggleButtons active={tvTime} onChange={toggleTv} />
         </div>
         <div

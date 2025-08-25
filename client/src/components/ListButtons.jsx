@@ -9,7 +9,13 @@ import {
 import { useState, useEffect } from "react";
 import useAxios from "../hooks/useAxios";
 
-function ListButtons({ onProfile = false, type, id, initialState = {} }) {
+function ListButtons({
+  onProfile = false,
+  onDetails = false,
+  type,
+  id,
+  initialState = {},
+}) {
   const [listState, setListState] = useState(initialState);
   const axios = useAxios();
 
@@ -48,17 +54,18 @@ function ListButtons({ onProfile = false, type, id, initialState = {} }) {
     }
   };
 
-  const profileClass = onProfile
+  const detailClass = onDetails
     ? "flex justify-around items-center bg-white shadow-md rounded-md p-1 md:w-full"
     : "hidden sm:flex gap-1 bg-white/50 rounded-full p-1 overlay absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity";
 
-  const buttonClass = onProfile
+  const profileClass = onProfile ? "p-1" : "p-1.5";
+  const buttonClass = onDetails
     ? "flex flex-col items-center gap-1 p-3 rounded-full text-xl font-medium transition-all hover:bg-gray-200"
-    : "favorites-btn bg-white/75 p-1.5 rounded-full hover:bg-white";
+    : `favorites-btn bg-white/75 rounded-full hover:bg-white ${profileClass}`;
 
   return (
     <>
-      <div className={`${profileClass}`}>
+      <div className={`${detailClass}`}>
         <button
           className={`${buttonClass}`}
           onClick={() => handleToggle("watched")}
