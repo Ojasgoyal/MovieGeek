@@ -25,21 +25,21 @@ const logger = createLogger({
     json() // JSON format for structured logging
   ),
   transports: [
-    // Console transport for development
+    // Console transport for all environments
+    new transports.Console({
+      format: combine(timestamp({ format: ISTTimestamp }), consoleLogFormat),
+    }),
+    // Daily rotate file transport for non-production environments
     ...(isProduction
       ? []
       : [
-          new transports.Console({
-            format: combine(timestamp({ format: ISTTimestamp }), consoleLogFormat),
+          new DailyRotateFile({
+            filename: "logs/app-%DATE%.log",
+            datePattern: "YYYY-MM-DD",
+            maxSize: "20m", // Rotate after 20MB
+            maxFiles: "7d", // Keep logs for 7 days
           }),
         ]),
-    // Daily rotate file transport for production
-    new DailyRotateFile({
-      filename: "logs/app-%DATE%.log",
-      datePattern: "YYYY-MM-DD",
-      maxSize: "20m", // Rotate after 20MB
-      maxFiles: "14d", // Keep logs for 14 days
-    }),
   ],
 });
 
