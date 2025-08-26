@@ -7,9 +7,9 @@ export default function HeroSection({
   setShowTrailer,
 }) {
   return (
-    <div className="relative h-[70vh] w-full overflow-hidden">
+    <div className="relative w-full overflow-hidden">
       {!showTrailer ? (
-        <div className="relative w-full h-full">
+        <div className="relative w-full h-[40vh] sm:h-[70vh] lg:h-[75vh] xl:h-[80vh]">
           {details.backdrop_path && (
             <img
               src={`https://image.tmdb.org/t/p/original${details.backdrop_path}`}
@@ -17,7 +17,8 @@ export default function HeroSection({
               className="w-full h-full object-cover opacity-60"
             />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-gray-50 via-gray-50/50  to-transparent"></div>
+
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-50 via-gray-50/50 to-transparent"></div>
 
           {/* Movie Title and Play Button */}
           <div className="absolute bottom-8 left-4 sm:left-8 max-w-4xl">
@@ -36,22 +37,24 @@ export default function HeroSection({
           </div>
         </div>
       ) : (
-        <div className="relative w-full h-full bg-white">
-          <iframe
-            width="100%"
-            height="100%"
-            src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1&controls=1&rel=0&modestbranding=1`}
-            title={trailer.name}
-            allowFullScreen
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            className="w-full h-full object-cover"
-          />
-          <button
-            onClick={() => setShowTrailer(false)}
-            className="absolute top-4 right-4 bg-gray-800 bg-opacity-70 hover:bg-opacity-90 text-white rounded-full w-12 h-12 flex items-center justify-center transition-all duration-300 shadow-md text-2xl"
-          >
-            ×
-          </button>
+        <div className="relative w-full mt-[37px] h-[40vh] sm:h-[70vh] lg:h-[75vh] xl:h-[80vh]">
+          <div className="relative w-full h-full">
+            <iframe
+              width="100%"
+              height="100%"
+              src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1&controls=1&rel=0&modestbranding=1`}
+              title={trailer.name}
+              allowFullScreen
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              className="w-full h-full object-cover"
+            />
+            <button
+              onClick={() => setShowTrailer(false)}
+              className="absolute top-4 right-4 bg-gray-800 bg-opacity-70 hover:bg-opacity-90 text-white rounded-full w-12 h-12 flex items-center justify-center transition-all duration-300 shadow-md text-2xl"
+            >
+              ×
+            </button>
+          </div>
         </div>
       )}
     </div>

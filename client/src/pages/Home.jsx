@@ -87,35 +87,24 @@ export default function Home() {
     fetchAllTrending();
   }, []);
 
-  const [isFixed, setIsFixed] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 500) {
-      
-        setIsFixed(true);
-      } else {
-        setIsFixed(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <main className="min-h-screen bg-slate-50 flex flex-col">
       {/* Hero Section */}
-      <section className="relative flex flex-col justify-center w-full items-center h-[100vh] -mt-[40px]">
-        {/* Background image */}
-        <div
-          className="absolute inset-0 bg-cover bg-fixed bg-center"
-          style={{
-            backgroundImage: `url(${randomPosterUrl})`,
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-black/25"></div>
-        <SearchBar ishome={true} />
+      <section className="relative flex flex-col justify-center w-full items-center -mt-[40px]">
+        {/* Hero Image */}
+        <div className="w-full relative max-h-screen overflow-hidden">
+          <img
+            src={randomPosterUrl}
+            alt="hero"
+            className="w-full h-auto object-contain"
+          />
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-black/25"></div>
+          {/* Search bar */}
+          <div className="absolute inset-0 flex justify-center items-center">
+            <SearchBar ishome={true} />
+          </div>
+        </div>
       </section>
 
       {/* Trending Movies Section */}

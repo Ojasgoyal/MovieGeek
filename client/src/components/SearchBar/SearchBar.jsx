@@ -8,7 +8,7 @@ export default function SearchBar({ ishome = false }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 500) {
+      if (window.scrollY > 250) {
         // change 200 to whatever point you want
         setIsFixed(true);
       } else {
@@ -39,7 +39,6 @@ export default function SearchBar({ ishome = false }) {
     >
       <input
         type="text"
-        autoFocus
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search for a movie , tv show , person..."
