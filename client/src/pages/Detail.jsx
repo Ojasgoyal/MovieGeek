@@ -39,7 +39,7 @@ export default function Detail() {
         </div>
       ) : (
         <>
-          <div className="min-h-screen mt-[37px] bg-gray-50">
+          <div className="min-h-screen bg-gray-50">
             <HeroSection
               details={details}
               trailer={trailer}

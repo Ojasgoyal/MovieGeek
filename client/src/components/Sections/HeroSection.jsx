@@ -9,7 +9,7 @@ export default function HeroSection({
   return (
     <div className="relative w-full overflow-hidden">
       {!showTrailer ? (
-        <div className="relative w-full h-[40vh] sm:h-[70vh] lg:h-[75vh] xl:h-[80vh]">
+        <div className="relative w-full h-[40vh] sm:h-[70vh]">
           {details.backdrop_path && (
             <img
               src={`https://image.tmdb.org/t/p/original${details.backdrop_path}`}
