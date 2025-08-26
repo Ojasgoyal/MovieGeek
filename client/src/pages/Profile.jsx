@@ -1,12 +1,11 @@
 import axios from "axios";
-import { useState, useEffect, lazy, Suspense} from "react";
+import { useState, useEffect} from "react";
 import { useAuth } from "../context/AuthContext";
 import { useParams, useNavigate } from "react-router-dom";
 import Bio from "../components/Profile/Bio";
 import SearchBar from "../components/SearchBar/SearchBar";
 import { useMessage } from "../context/MessageContext";
-
-const Lists = lazy(() => import("../components/Profile/Lists"));
+import Lists from "../components/Profile/Lists"
 
 export default function Profile() {
   const { username } = useParams();
@@ -61,17 +60,9 @@ export default function Profile() {
             refreshStats={fetchStats}
           />
         )}
-        <Suspense
-          fallback={
-            <div className="fade-container visible py-6 text-center text-gray-500">
-              Loading ...
-            </div>
-          }
-        >
           <div className="fade-container visible">
             <Lists username={username} />
           </div>
-        </Suspense>
       </div>
     </>
   );
