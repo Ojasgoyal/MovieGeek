@@ -23,10 +23,14 @@ const userSchema = new mongoose.Schema({
     url: String,
     public_id: String
   },
-  refreshToken :{
-    type:String,
-    default:null
-  }
+  refreshTokens: [
+    {
+      token: String,
+      createdAt: { type: Date, default: Date.now },
+      device: String // optional, e.g., "Chrome", "iPhone"
+    }
+  ]
+
 }, { timestamps: true });
 
 export default mongoose.model('User', userSchema);

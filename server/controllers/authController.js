@@ -32,7 +32,7 @@ export const registerUser = async (req , res) => {
         const accessToken = generateAccessToken(user);
         const refreshToken = generateRefreshToken(user);
 
-        user.refreshToken = refreshToken;
+        user.refreshTokens.push({ token: refreshToken, device: req.headers["user-agent"] });
         await user.save();
         res
           .cookie("refreshToken", refreshToken,{
@@ -80,7 +80,7 @@ export const loginUser = async (req,res) => {
         const accessToken = generateAccessToken(user);
         const refreshToken = generateRefreshToken(user);
 
-        user.refreshToken = refreshToken;
+        user.refreshTokens.push({ token: refreshToken, device: req.headers["user-agent"] });
         await user.save();
 
         res
@@ -114,7 +114,7 @@ export const refreshAccessToken = async (req,res) => {
         const decoded = jwt.verify(token,process.env.JWT_REFRESH_SECRET)
         const user = await User.findById(decoded.userId)
 
-        if (!user || user.refreshToken !== token) {
+        if (!user || !user.refreshTokens.some(rt => rt.token === token)) {
         return res.status(403).json({ error: "Invalid refresh token" });
         }
 
@@ -135,7 +135,7 @@ export const logoutUser = async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
     const user = await User.findById(decoded.userId);
     if (user) {
-      user.refreshToken = null;
+      user.refreshTokens =  user.refreshTokens.filter(rt => rt.token !== token);
       await user.save();
     }
 
