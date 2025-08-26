@@ -91,15 +91,14 @@ export default function Home() {
     <main className="min-h-screen bg-slate-50 flex flex-col">
       {/* Hero Section */}
       <section className="relative flex flex-col justify-center w-full items-center -mt-[40px]">
-        {/* Hero Image */}
-        <div className="w-full relative max-h-screen overflow-hidden">
-          <img
-            src={randomPosterUrl}
-            alt="hero"
-            className="w-full h-auto object-contain"
-          />
+        {/* Hero Background with CSS */}
+        <div
+          className="w-full relative max-h-screen h-[60vh] sm:h-[100vh] bg-cover bg-center"
+          style={{ backgroundImage: `url(${randomPosterUrl})` }}
+        >
           {/* Overlay */}
           <div className="absolute inset-0 bg-black/25"></div>
+
           {/* Search bar */}
           <div className="absolute inset-0 flex justify-center items-center">
             <SearchBar ishome={true} />
