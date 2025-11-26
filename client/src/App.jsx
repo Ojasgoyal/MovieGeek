@@ -11,6 +11,7 @@ import { useAuth } from "./context/AuthContext";
 import { useMessage } from "./context/MessageContext";
 import Profile from "./pages/Profile";
 import Follower from "./pages/Follower";
+import InstallPage from "./pages/InstallPage";
 
 const PrivateRoute = ({ children }) => {
   const { user,loading } = useAuth();
@@ -84,6 +85,7 @@ function App() {
           }
         />
         <Route path="/:type/:param2" element={<RouteLayout />} />
+        <Route path="/install" element={<InstallPage/>} />
         <Route path="/404" element={<NotFound />} />
       </Routes>
     </>
